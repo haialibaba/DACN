@@ -1866,7 +1866,7 @@ section {
 
 .button-chat_container {
   position: fixed;
-  align-item: center; 
+  align-items: center; 
   height: 44px;
   padding: 0 16px;
   width: fit-content;
@@ -1980,7 +1980,7 @@ section {
 }
 
 .icon-header_chat{
-  align-item: center;
+  align-items: center;
   font-size: 12px;
   border-radius: 50%; 
   padding:6px 7px 4px 7px; 
@@ -1997,7 +1997,7 @@ section {
 .icon-minis,
 .icon-endchat{
   color: rgba(192, 192, 192, 0.6);
-  align-item: center;
+  align-items: center;
   font-size: 30px;
   margin-left: 10px;
   cursor: pointer;
@@ -2035,7 +2035,7 @@ section {
   text-align: left;
   width: 200px;
   height: 50px;
-  boder-radius: 50%;
+  border-radius: 50%;
 }
 
 .message.sent {
@@ -2045,7 +2045,7 @@ section {
   text-align: right;
   width: 200px;
   height: 50px;
-  boder-radius: 50%;
+  border-radius: 50%;
 }
 
 .chat-input {
@@ -2073,4 +2073,18 @@ input[type="text"] {
   padding: 10px 20px;
   margin-left: 10px;
   cursor: pointer;
+}
+/*------------------Doctor-----------------------------*/
+
+.doctors button {
+  background: #1977cc;
+  border: 0;
+  padding: 10px 35px;
+  margin: 20px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+.doctors button:hover{
+  background: #1c84e3;
 }
