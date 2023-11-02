@@ -1866,7 +1866,7 @@ section {
 
 .button-chat_container {
   position: fixed;
-  align-item: center; 
+  align-items: center; 
   height: 44px;
   padding: 0 16px;
   width: fit-content;
@@ -1980,7 +1980,7 @@ section {
 }
 
 .icon-header_chat{
-  align-item: center;
+  align-items: center;
   font-size: 12px;
   border-radius: 50%; 
   padding:6px 7px 4px 7px; 
@@ -1997,7 +1997,7 @@ section {
 .icon-minis,
 .icon-endchat{
   color: rgba(192, 192, 192, 0.6);
-  align-item: center;
+  align-items:  center;
   font-size: 30px;
   margin-left: 10px;
   cursor: pointer;
@@ -2035,7 +2035,7 @@ section {
   text-align: left;
   width: 200px;
   height: 50px;
-  boder-radius: 50%;
+  border-radius: 50%;
 }
 
 .message.sent {
@@ -2045,7 +2045,7 @@ section {
   text-align: right;
   width: 200px;
   height: 50px;
-  boder-radius: 50%;
+  border-radius: 50%;
 }
 
 .chat-input {
