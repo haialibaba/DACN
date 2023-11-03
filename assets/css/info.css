@@ -339,6 +339,8 @@ input[type="submit"]:hover {
     font-size: 25px;
 }
 a {
+    margin: 10px;
+    position: absolute;
     text-decoration: none; /* Loại bỏ gạch chân mặc định */
     color: #0077b5; /* Màu văn bản (ví dụ: màu xanh) */
     font-weight: bold; /* Đậm */

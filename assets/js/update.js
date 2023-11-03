@@ -149,13 +149,26 @@ function getDatainfoUser() {
   const ageUser = document.getElementById('Age_number').value;
   const genderUser = document.getElementById('gender').value;
 
+  // const errorElement = document.getElementById('error-message'); // Thêm một phần tử để hiển thị thông báo lỗi
+
+  // Kiểm tra dữ liệu trống
+  if (idUser === '' || nameUser === '' || birthUser === '' || phoneUser === '' || ageUser === '' || genderUser === '') {
+   alert('Vui lòng điền đầy đủ thông tin.');
+    return; // Không cho cập nhật nếu có dữ liệu trống
+  }
+
+  // Kiểm tra định dạng số điện thoại
+  const phonePattern = /^[0-9]{10}$/; // Ví dụ: Kiểm tra xem số điện thoại có 10 chữ số hay không
+  if (!phonePattern.test(phoneUser)) {
+    alert('Số điện thoại không hợp lệ.');
+    return; // Không cho cập nhật nếu số điện thoại không hợp lệ
+  }
+
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     const imageData = reader.result; // Lấy đoạn mã Base64 của ảnh
     const fileName = imgUser.files[0].name;
-
-    // Kiểm tra xem các giá trị đã được lấy đúng hay chưa
-    console.log(idUser, nameUser, birthUser, phoneUser, genderUser);
+    uploadImageToSourceCodeFolder(fileName, imageData)
 
     // Thực hiện cập nhật dữ liệu vào Firebase Realtime Database
     const userRef = ref(connectDB, 'users/' + idUser);
@@ -172,8 +185,10 @@ function getDatainfoUser() {
     .then(() => {
       console.log("Thông tin người dùng đã được cập nhật thành công");
       
-      // Sau khi cập nhật thành công vào Firebase, gọi hàm uploadImageToSourceCodeFolder
-      uploadImageToSourceCodeFolder(fileName, imageData);
+      // Hiển thị thông báo và tắt form update
+      alert('Cập nhật thành công!');
+      // Tắt form update (thay đổi thuộc tính style.display thành 'none')
+      document.getElementById('id-form').style.display = 'none';
     })
     .catch((error) => {
       console.error("Đã xảy ra lỗi khi cập nhật thông tin người dùng:", error);
@@ -184,10 +199,13 @@ function getDatainfoUser() {
     reader.readAsDataURL(imgUser.files[0]);
   } else {
     console.error("Vui lòng chọn một hình ảnh trước khi cập nhật.");
+    alert("Vui lòng chọn một hình ảnh trước khi cập nhật.");
   }
 }
 
+
 dataToget.addEventListener('click', getDatainfoUser);
+
 function downloadBlob(blob, fileName) {
   var url = window.URL.createObjectURL(blob);
   var a = document.createElement('a');
@@ -212,20 +230,34 @@ function uploadImageToSourceCodeFolder(fileName, imageData) {
 
 
 
-
 function setDataPassword() {
+  const oldPassword = document.getElementById('current-password').value;
   const newPassword = document.getElementById('new-password').value;
   const newPasswordConfirm = document.getElementById('confirm-password').value;
   const dbRef = ref(connectDB, `account/${loggedInUserID}/Password`);
+  const errorElement = document.getElementById('error-message'); // Phần tử hiển thị thông báo lỗi
 
-  if (newPassword == newPasswordConfirm) {
-    set(dbRef,  newPassword)
-  }
-  else {
-    alert("Mật khẩu nhập lại không đúng");
+  // Kiểm tra input để trống
+  if (oldPassword === '' ||newPassword === '' || newPasswordConfirm === '') {
+    alert( 'Vui lòng điền đầy đủ thông tin.');
+    return;
   }
 
+  // Kiểm tra xác nhận mật khẩu
+  if (newPassword === newPasswordConfirm) {
+    set(dbRef, newPassword)
+      .then(() => {
+        alert('Cập nhật thành công!'); // Thông báo sau khi cập nhật thành công
+        document.getElementById('id-form').style.display = 'none'; // Tắt form sau khi cập nhật xong
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật mật khẩu:", error);
+      });
+  } else {
+    alert('Mật khẩu nhập lại không đúng.') ;
+  }
 }
+
 document.getElementById('update-password').addEventListener('click', setDataPassword)
 
 
