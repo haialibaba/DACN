@@ -76,7 +76,7 @@ function getDataUpdate() {
         console.log(iDKH)
         const getData = `      <div class="img-container">
         <label for="photo">Photo:</label>
-        <input type="file" id="idphoto" name="photo" accept="image/jpeg, image/webp, image/jpg, image/png" onchange="handleFileInputChange(this)" value ="${childData.Img}" >
+        <input type="file" id="idphoto" name="photo" accept="image/jpeg, image/webp, image/jpg, image/png" onchange="handleFileInputChange(this)" >
         <img id="imginfo" src="${childData.Img}" alt="">
     </div>
     <div style="display: none;">
@@ -148,22 +148,19 @@ function getDatainfoUser() {
   const phoneUser = document.getElementById('phone_number').value;
   const ageUser = document.getElementById('Age_number').value;
   const genderUser = document.getElementById('gender').value;
-  
-  var imgU = imgUser.value;
-  var fileName = imgU.split("\\").pop();
-  
-  // Kiểm tra xem các giá trị đã được lấy đúng hay chưa
-  console.log(idUser, nameUser, birthUser, phoneUser, genderUser);
-  
+
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     const imageData = reader.result; // Lấy đoạn mã Base64 của ảnh
-    console.log(imageData);
-    
+    const fileName = imgUser.files[0].name;
+
+    // Kiểm tra xem các giá trị đã được lấy đúng hay chưa
+    console.log(idUser, nameUser, birthUser, phoneUser, genderUser);
+
     // Thực hiện cập nhật dữ liệu vào Firebase Realtime Database
     const userRef = ref(connectDB, 'users/' + idUser);
     set(userRef, {
-      Img: imageData,
+      Img: fileName,
       IDTK: loggedInUserID,
       IDKH: idUser,
       Birth: birthUser,
@@ -174,30 +171,55 @@ function getDatainfoUser() {
     })
     .then(() => {
       console.log("Thông tin người dùng đã được cập nhật thành công");
+      
+      // Sau khi cập nhật thành công vào Firebase, gọi hàm uploadImageToSourceCodeFolder
+      uploadImageToSourceCodeFolder(fileName, imageData);
     })
     .catch((error) => {
       console.error("Đã xảy ra lỗi khi cập nhật thông tin người dùng:", error);
     });
   });
-  
-  reader.readAsDataURL(imgUser.files[0]);
+
+  if (imgUser.files[0]) {
+    reader.readAsDataURL(imgUser.files[0]);
+  } else {
+    console.error("Vui lòng chọn một hình ảnh trước khi cập nhật.");
+  }
 }
 
 dataToget.addEventListener('click', getDatainfoUser);
+function downloadBlob(blob, fileName) {
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
 
-dataToget.addEventListener('click', getDatainfoUser);
+function uploadImageToSourceCodeFolder(fileName, imageData) {
+  // Tạo một Blob từ Base64 dữ liệu
+  const blob = new Blob([imageData], { type: 'image/jpg' }); // Thay đổi type tùy thuộc vào loại tệp ảnh bạn đang tải lên
+
+  // Sử dụng download.js để tạo liên kết tải về
+  downloadBlob(blob, fileName);
+
+  console.log("Tên ảnh đã được tạo liên kết tải về.");
+}
+
+
+
+
 
 function setDataPassword() {
-  // const loggedInUserString = localStorage.getItem('loggedInUser');
-  // const loggedInUserID = JSON.parse(loggedInUserString).id;
   const newPassword = document.getElementById('new-password').value;
   const newPasswordConfirm = document.getElementById('confirm-password').value;
   const dbRef = ref(connectDB, `account/${loggedInUserID}/Password`);
 
   if (newPassword == newPasswordConfirm) {
-    set(dbRef, {
-      Password: newPassword
-    })
+    set(dbRef,  newPassword)
   }
   else {
     alert("Mật khẩu nhập lại không đúng");
