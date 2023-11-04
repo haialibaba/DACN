@@ -66,7 +66,13 @@ function getDataUpdate() {
       const childData = childSnapshot.val();
 
       if (childData.IDTK == loggedInUserID) {
-        const getData = ` 
+        iDKH = childData.IDKH;
+        console.log(iDKH)
+        const getData = `      <div class="img-container">
+        <label for="photo">Photo:</label>
+        <input type="file" id="idphoto" name="photo" accept="image/jpeg, image/webp, image/jpg, image/png" onchange="handleFileInputChange(this)" value ="${childData.Img}" >
+        <img id="imginfo" src="${childData.Img}" alt="">
+    </div>
     <div style="display: none;">
         <input type="text" id="id_kh" name="id_kh" value = "${childData.IDTK}" required>
     </div>
@@ -138,28 +144,32 @@ function getDatainfoUser() {
   const phoneUser = document.getElementById('phone_number').value;
   const ageUser = document.getElementById('Age_number').value;
   const genderUser = document.getElementById('gender').value;
-
-  const updates = {
-    NameKH: nameUser,
-    Birth: birthUser,
-    PhoneKH: phoneUser,
-    Age: ageUser,
-    Sex: genderUser
-  };
   
-  const userRef = ref(connectDB, 'account/' + idUser);
-  update(userRef, updates)
+  var imgU = imgUser.value;
+  var fileName = imgU.split("\\").pop();
+  
+  // Kiểm tra xem các giá trị đã được lấy đúng hay chưa
+  console.log(idUser, nameUser, birthUser, phoneUser, genderUser);
+  
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    const imageData = reader.result; // Lấy đoạn mã Base64 của ảnh
+    console.log(imageData);
+    
+    // Thực hiện cập nhật dữ liệu vào Firebase Realtime Database
+    const userRef = ref(connectDB, 'users/' + idUser);
+    set(userRef, {
+      Img: imageData,
+      IDTK: loggedInUserID,
+      IDKH: idUser,
+      Birth: birthUser,
+      NameKH: nameUser,
+      AgeKH: ageUser,
+      PhoneKH: phoneUser,
+      Sex: genderUser
+    })
     .then(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Cập nhật thành công!',
-        text: 'Bạn đã cập nhật thành công.',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.reload();
-        }
-      });
+      console.log("Thông tin người dùng đã được cập nhật thành công");
     })
     .catch((error) => {
       Swal.fire({
@@ -173,96 +183,31 @@ function getDatainfoUser() {
         }
       });
     });
+  });
+  
+  reader.readAsDataURL(imgUser.files[0]);
 }
+
 
 dataToget.addEventListener('click', getDatainfoUser);
 
-async function setDataPassword() {
-  try {
-    // Lấy các giá trị từ các trường nhập liệu
-    const idUser = document.getElementById('id_kh').value;
-    const oldPassword = document.getElementById('current-password').value;
-    const newPassword = document.getElementById('new-password').value;
-    const newPasswordConfirm = document.getElementById('confirm-password').value;
+function setDataPassword() {
+  // const loggedInUserString = localStorage.getItem('loggedInUser');
+  // const loggedInUserID = JSON.parse(loggedInUserString).id;
+  const newPassword = document.getElementById('new-password').value;
+  const newPasswordConfirm = document.getElementById('confirm-password').value;
+  const dbRef = ref(connectDB, `account/${loggedInUserID}/Password`);
 
-    // Kiểm tra input để trống và độ dài mật khẩu mới
-    if (oldPassword === '' || newPassword === '' || newPasswordConfirm === '') {
-      alert('Vui lòng điền đầy đủ thông tin.');
-      return;
-    } else if (newPassword.length < 6) {
-      alert('Mật khẩu phải sử dụng ít nhất 6 ký tự.');
-      return;
-    }
-
-    // Lấy tham chiếu đến người dùng trong Firebase Realtime Database
-    const userRef = ref(connectDB, 'account/' + idUser);
-    const snapshot = await get(userRef);
-
-    if (snapshot.exists()) {
-      const userData = snapshot.val();
-      const storedPassword = userData.Password; // Giả sử mật khẩu được lưu trong trường "Password" của dữ liệu người dùng
-
-      // Kiểm tra mật khẩu cũ
-      if (storedPassword === oldPassword) {
-        // Kiểm tra xác nhận mật khẩu mới
-        if (newPassword === newPasswordConfirm) {
-          // Cập nhật mật khẩu mới trong Firebase
-          const updates = {
-            Password: newPassword
-          };
-
-          await update(userRef, updates);
-
-          // Hiển thị thông báo cập nhật thành công
-          Swal.fire({
-            icon: 'success',
-            title: 'Cập nhật thành công!',
-            text: 'Mật khẩu đã được cập nhật thành công.',
-            confirmButtonText: 'OK'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              location.reload();
-            }
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Lỗi',
-            text: 'Mật khẩu mới và xác nhận mật khẩu không trùng khớp.',
-            confirmButtonText: 'OK'
-          })
-        }
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Lỗi',
-          text: 'Mật khẩu cũ không đúng',
-          confirmButtonText: 'OK'
-        })
-      }
-    } else {
-      // Hiển thị thông báo tài khoản không tồn tại
-      showErrorMessage('Tài khoản không tồn tại.');
-    }
-  } catch (error) {
-    console.error('Lỗi khi thực hiện cập nhật mật khẩu: ', error);
-    showErrorMessage('Lỗi khi cập nhật mật khẩu. Vui lòng thử lại sau.');
+  if (newPassword == newPasswordConfirm) {
+    set(dbRef, {
+      Password: newPassword
+    })
   }
-}
+  else {
+    alert("Mật khẩu nhập lại không đúng");
+  }
 
-function showErrorMessage(message) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Lỗi',
-    text: message,
-    confirmButtonText: 'OK'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      location.reload();
-    }
-  });
 }
-
 document.getElementById('update-password').addEventListener('click', setDataPassword)
 
 
