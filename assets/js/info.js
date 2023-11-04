@@ -22,24 +22,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const connectDB = getDatabase(app);
 
-
-// const nameUser = document.getElementById('name').value;
-//   const birthUser = document.getElementById('date_of_birth').value;
-//   const phoneUser = document.getElementById('phone_number').value;
-//   const genderUser = document.querySelector('input[name="gender"]:checked').value;
-
 const loggedInUserString = localStorage.getItem('loggedInUser');
+function renderInfo(){
 const loggedInUserID = JSON.parse(loggedInUserString).id;
 var data = document.querySelector('#infoUser');
 const dbRef = ref(connectDB, 'users/');
 onValue(dbRef, (snapshot) => {
   snapshot.forEach((childSnapshot) => {
     const childData = childSnapshot.val();
-    // console.log(childData);
-    // console.log(childData.IDKH);
-    // iDKH = childData.IDKH;
-    //     iDTK = childData.IDTK;
-    //     console.log(iDKH, iDTK);
     if (childData.IDTK == loggedInUserID) {
       const detailUser = `
               <h2>${childData.NameKH}</h2>
@@ -59,18 +49,7 @@ onValue(dbRef, (snapshot) => {
         data.innerHTML = detailUser;
       }
     }
-    // if (childData.IDTK == loggedInUserID) {
-    //   document.getElementById("submitUpdate").addEventListener('click', ()=>{
-    //     set(ref(connectDB,'users/' + iDKH),{
-    //       IDTK: iDTK,
-    //       IDKH: iDKH,
-    //       NameKH: nameUser,
-    //       // AgeKH: birthUser,
-    //       PhoneKH: phoneUser,
-    //       Sex: genderUser
-    //     })
-    //   });
-    // }
+
   })
 
 })
@@ -79,22 +58,22 @@ const db = ref(connectDB, 'medicalrecord/');
 onValue(db, (snap) => {
   snap.forEach((childSnap) => {
     const childDt = childSnap.val();
-    // console.log(childDt);
-    // console.log(childDt.IDKH);
-    // console.log(childDt.Info);
-    // if(childDt.IDTK == loggedInUserID) {
     const detailUser = `
         <li>Loại bệnh: ${childDt.Info}</li>
         <h5>Triệu chứng: ${childDt.PatientCondition}</h5>
         `;
-    // console.log(detailUser);
     if (data !== null) {
       document.getElementById("medicalrecords").innerHTML = detailUser;
     }
-    // }
   })
 
 })
+}
+
+window.onload = () => {
+  renderInfo();
+};
+
 function loginUser() {
   var userName = document.getElementById("user-name").value;
   var userPassword = document.getElementById("user-password").value;
@@ -179,10 +158,4 @@ function splitSTringIDAccount(IDTK) {
     return null;
   }
 }
-function displayDetailUser() {
-
-}
-window.onload = () => {
-  displayDetailUser();
-};
 
