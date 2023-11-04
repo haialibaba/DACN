@@ -22,79 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const connectDB = getDatabase(app);
 
-
-// const nameUser = document.getElementById('name').value;
-//   const birthUser = document.getElementById('date_of_birth').value;
-//   const phoneUser = document.getElementById('phone_number').value;
-//   const genderUser = document.querySelector('input[name="gender"]:checked').value;
-
-const loggedInUserString = localStorage.getItem('loggedInUser');
-const loggedInUserID = JSON.parse(loggedInUserString).id;
-var data = document.querySelector('#infoUser');
-const dbRef = ref(connectDB, 'users/');
-onValue(dbRef, (snapshot) => {
-  snapshot.forEach((childSnapshot) => {
-    const childData = childSnapshot.val();
-    // console.log(childData);
-    // console.log(childData.IDKH);
-    // iDKH = childData.IDKH;
-    //     iDTK = childData.IDTK;
-    //     console.log(iDKH, iDTK);
-    if (childData.IDTK == loggedInUserID) {
-      const detailUser = `
-              <h2>${childData.NameKH}</h2>
-              <div class="userInfo">
-                  <div>ID:${childData.IDTK}</div>
-                  <div>Tuổi: ${childData.AgeKH}</div>
-                  <div>Ngày sinh: ${childData.AgeKH}</div>
-                  <div>Số điện thoại: ${childData.PhoneKH}</div>
-                  <div>Giới tính: ${childData.Sex}</div>
-              </div>
-              <div class="updateUser">
-                  <button class="updateInfo" type="button" onclick="toggleDiv()">Sửa thông tin</button>
-                  <button class="updatePass" type="button" onclick="togglePass()">Đổi mật khẩu</button>
-              </div>`;
-      // console.log(detailUser);
-      if (data !== null) {
-        data.innerHTML = detailUser;
-      }
-    }
-    // if (childData.IDTK == loggedInUserID) {
-    //   document.getElementById("submitUpdate").addEventListener('click', ()=>{
-    //     set(ref(connectDB,'users/' + iDKH),{
-    //       IDTK: iDTK,
-    //       IDKH: iDKH,
-    //       NameKH: nameUser,
-    //       // AgeKH: birthUser,
-    //       PhoneKH: phoneUser,
-    //       Sex: genderUser
-    //     })
-    //   });
-    // }
-  })
-
-})
-
-const db = ref(connectDB, 'medicalrecord/');
-onValue(db, (snap) => {
-  snap.forEach((childSnap) => {
-    const childDt = childSnap.val();
-    // console.log(childDt);
-    // console.log(childDt.IDKH);
-    // console.log(childDt.Info);
-    // if(childDt.IDTK == loggedInUserID) {
-    const detailUser = `
-        <li>Loại bệnh: ${childDt.Info}</li>
-        <h5>Triệu chứng: ${childDt.PatientCondition}</h5>
-        `;
-    // console.log(detailUser);
-    if (data !== null) {
-      document.getElementById("medicalrecords").innerHTML = detailUser;
-    }
-    // }
-  })
-
-})
 function loginUser() {
   var userName = document.getElementById("user-name").value;
   var userPassword = document.getElementById("user-password").value;
@@ -102,14 +29,25 @@ function loginUser() {
   onValue(dbRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       const childData = childSnapshot.val();
-      if (childData.NameTK == userName && childData.Password == userPassword) {
+      if (childData.Account == userName && childData.Password == userPassword && childData.permission === 2) {
         const loggedInUser = {
-          name: childData.NameTK,
+          name: childData.NameKH,
           id: childData.IDTK
         };
 
         localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+        Swal.fire({
+          icon: 'success',
+          title: 'Đăng nhập thành công!',
+          text: 'Bạn đã đăng nhập thành công.',
+        });
         window.location.href = "index.html";
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Đăng nhập thất bại!',
+          text: 'Bạn đã đăng nhập thất bại.',
+        });
       }
     })
 
@@ -118,12 +56,26 @@ function loginUser() {
 }
 loginUser();
 
+
+function isValidEmail(email) {
+  var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailPattern.test(email);
+}
+
+function isValidPhoneNumber(phoneNumber) {
+  // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại ở Việt Nam
+  var phonePattern = /^(0[0-9]{9})$/;
+  return phonePattern.test(phoneNumber);
+}
+
 function registerUser() {
-  var newName = document.getElementById("new-user-name").value;
+  var newAccount = document.getElementById("new-user-account").value;
   var newPassword = document.getElementById("new-user-password").value;
+  var newName = document.getElementById("new-user-name").value;
+  var newPhone = document.getElementById("new-user-phone").value;
   var email = document.getElementById("new-user-email").value;
   var confirmPassword = document.getElementById("confirm-user-password").value;
-  if (newName === "" || email === "" || newPassword === "" || confirmPassword === "") {
+  if (newAccount === "" || newName === "" || newPhone === ""  || email === "" || newPassword === "" || confirmPassword === "") {
     alert("Vui lòng điền đầy đủ thông tin.");
     return;
   }
@@ -134,15 +86,27 @@ function registerUser() {
   else if (newPassword.length < 6) {
     alert("Mật khẩu phải có ít nhất 6 ký tự.");
     return;
+  }else if(!isValidEmail(email)){
+    alert("Email không đúng định dạng");
+    return;
+  }else if(!isValidPhoneNumber(newPhone)){
+    alert("Phone không đúng định dạng");
+    return;
   }
   else {
-    addAccountToDatabase(newName, newPassword, email)
+    addAccountToDatabase(newAccount, newPassword, email,newPhone,newName)
+    Swal.fire({
+      icon: 'success',
+      title: 'Đăng ký thành công!',
+      text: 'Bạn đã đăng ký thành công.',
+    });
+    window.location.href = "login.html";
   }
 }
 document.getElementById("register").addEventListener("click", registerUser);
 
 var newID;
-function addAccountToDatabase(username, password, email) {
+function addAccountToDatabase(account, password, email,phoneKH,nameKH) {
   const dbRef = query(ref(connectDB, 'account/'), limitToLast(1));
   onValue(dbRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
@@ -155,10 +119,16 @@ function addAccountToDatabase(username, password, email) {
     })
   })
   set(ref(connectDB, 'account/' + newID), {
-    NameTK: username,
+    Account: account,
     Email: email,
     Password: password,
-    IDTK: newID
+    IDTK: newID,
+    NameKH: nameKH,
+    Age:"",
+    Birth:"",
+    PhoneKH: phoneKH,
+    Sex:"",
+    permission: 2
   });
 }
 
@@ -185,4 +155,3 @@ function displayDetailUser() {
 window.onload = () => {
   displayDetailUser();
 };
-

@@ -23,7 +23,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 70%;
 }
 
 .infoImg .infoImg,
@@ -121,7 +121,8 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="date"],
-input[type="tel"] {
+input[type="tel"],
+#gender {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -204,15 +205,15 @@ input[type="submit"]:hover {
 }
 
 .pageInfo {
-    position: absolute;
+    position: relative;
     z-index: 1;
     /* Các quy tắc CSS khác cho pageInfo */
 }
 
 .form-container {
-    position: relative;
+    position: absolute;
     top: 0;
-    left: 0;
+    left: 20%;
     width: 100%;
     height: 100%;
     /* background-color: rgba(0, 0, 0, 0.5); */
@@ -264,9 +265,9 @@ input[type="submit"]:hover {
     background-color:#45a049;
 }
 .password-form {
-    position: relative;
+    position: absolute;
     top: 0;
-    left: 0;
+    left: 20%;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -339,6 +340,8 @@ input[type="submit"]:hover {
     font-size: 25px;
 }
 a {
+    margin: 10px;
+    position: absolute;
     text-decoration: none; /* Loại bỏ gạch chân mặc định */
     color: #0077b5; /* Màu văn bản (ví dụ: màu xanh) */
     font-weight: bold; /* Đậm */

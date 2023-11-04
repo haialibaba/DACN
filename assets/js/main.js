@@ -221,20 +221,4 @@
    */
   new PureCounter();
 
-
-    const btn_boxchat = document.getElementById("btn_botchat");
-    const minis_btn = document.querySelector(".icon-minis");
-    const boxchat = document.querySelector(".box-chat_wrapped");
-    btn_boxchat.addEventListener("click",() => {
-      boxchat.classList.add("slide-up");
-      boxchat.style.display = "flex";
-    });
-
-    minis_btn.addEventListener("click",() => {
-      boxchat.classList.add("slide-out");
-      boxchat.style.display = "none";
-      setTimeout(() => {
-        boxchat.classList.remove("closed");
-      }, 200);
-    });
 })()
