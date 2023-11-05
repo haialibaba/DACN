@@ -224,4 +224,42 @@
   new PureCounter();
 
 })()
-
+    // Trong trang bảo mật (index.html)
+    function displayUserName() {
+   const hasLoginElement = document.getElementById("hasLogin");
+   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+ 
+ 
+   if (isLoggedIn) {
+     const loggedInUserString = localStorage.getItem('loggedInUser');
+     console.log(loggedInUserString);
+     if (loggedInUserString) {
+       const loggedInUser = JSON.parse(loggedInUserString);
+       const loggedInUserName = loggedInUser.name;
+       const data = `
+         <img src="./assets/img/shizuka.jpg" alt="">
+         <span id="userLogin">${loggedInUserName}</span>
+         <ul class="has__login-list">
+           <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Thay đổi thông tin</a></li>
+           <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+         </ul>
+       `;
+       hasLoginElement.innerHTML = data;
+       document.getElementById("appointment").style.display = "block";
+       document.getElementById("appointment_btn").style.display = "block";
+     }
+   } 
+ }
+ 
+ displayUserName();
+ 
+ 
+ 
+     function logoutUser() {
+   localStorage.removeItem('loggedInUser');
+   localStorage.removeItem('isLoggedIn');
+   window.location.href = "index.html"; 
+ }
+ 
+ 
+ 
