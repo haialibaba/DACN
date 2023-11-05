@@ -119,6 +119,10 @@
             body.classList.remove('active')
         }
 
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = "index.html"; // Điều hướng người dùng đến trang bảo mật nếu họ đã đăng nhập.
+        }
+
     </script>
 
 </body>

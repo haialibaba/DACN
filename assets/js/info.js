@@ -27,6 +27,8 @@ function loginUser() {
   var userPassword = document.getElementById("user-password").value;
   const dbRef = ref(connectDB, 'account/');
   onValue(dbRef, (snapshot) => {
+    let loggedIn = false; // Biến để kiểm tra xem người dùng có đăng nhập thành công không.
+    
     snapshot.forEach((childSnapshot) => {
       const childData = childSnapshot.val();
       if (childData.Account == userName && childData.Password == userPassword && childData.permission === 2) {
@@ -41,20 +43,24 @@ function loginUser() {
           title: 'Đăng nhập thành công!',
           text: 'Bạn đã đăng nhập thành công.',
         });
+        localStorage.setItem('isLoggedIn', 'true');
         window.location.href = "index.html";
-      }else{
-        Swal.fire({
-          icon: 'error',
-          title: 'Đăng nhập thất bại!',
-          text: 'Bạn đã đăng nhập thất bại.',
-        });
+        loggedIn = true; // Đánh dấu người dùng đã đăng nhập thành công.
+        document.getElementById("appointment").style.display = "block";
       }
-    })
+    });
 
-  })
-  document.getElementById("submit-login").addEventListener("click", loginUser);
+    // Nếu không có tài khoản nào trùng khớp, hiển thị thông báo lỗi.
+    if (!loggedIn) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Đăng nhập thất bại',
+        text: 'Tài khoản hoặc mật khẩu không đúng hoặc bạn không có quyền truy cập.',
+      });
+    }
+  });
 }
-loginUser();
+document.getElementById("submit-login").addEventListener("click", loginUser);
 
 
 function isValidEmail(email) {
