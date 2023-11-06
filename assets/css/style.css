@@ -2047,7 +2047,6 @@ section {
   height: 50px;
   border-radius: 50%;
 }
-
 .chat-input {
   display: flex;
   align-items: center;
@@ -2075,7 +2074,6 @@ input[type="text"] {
   cursor: pointer;
 }
 /*------------------Doctor-----------------------------*/
-
 .doctors button {
   background: #1977cc;
   border: 0;
@@ -2087,4 +2085,7 @@ input[type="text"] {
 }
 .doctors button:hover{
   background: #1c84e3;
+}
+#button-show-list a{
+  color: #fff !important;
 }
