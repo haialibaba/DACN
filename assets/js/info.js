@@ -36,8 +36,64 @@ function loginUser() {
           name: childData.NameKH,
           id: childData.IDTK
         };
-
         localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+        Swal.fire({
+          icon: 'success',
+          title: 'Đăng nhập thành công!',
+          text: 'Bạn đã đăng nhập thành công.',
+        });
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = "index.html";
+        loggedIn = true; // Đánh dấu người dùng đã đăng nhập thành công.
+        document.getElementById("appointment").style.display = "block";
+      }else   if (childData.Account == userName && childData.Password == userPassword && childData.permission === 1){
+        const loggedInUserAdmin = {
+          name: childData.Account,
+          id: childData.IDTK
+        };
+
+        localStorage.setItem('loggedInUserAdmin', JSON.stringify(loggedInUserAdmin));
+        Swal.fire({
+          icon: 'success',
+          title: 'Đăng nhập thành công!',
+          text: 'Bạn đã đăng nhập thành công.',
+        });
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = "index.html";
+        loggedIn = true; // Đánh dấu người dùng đã đăng nhập thành công.
+        document.getElementById("appointment").style.display = "block";
+        document.getElementById("permission_account").style.display = "block";
+      }
+    });
+
+    // Nếu không có tài khoản nào trùng khớp, hiển thị thông báo lỗi.
+    if (!loggedIn) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Đăng nhập thất bại',
+        text: 'Tài khoản hoặc mật khẩu không đúng hoặc bạn không có quyền truy cập.',
+      });
+    }
+  });
+}
+
+function loginDoctor() {
+  var userName = document.getElementById("user-name").value;
+  var userPassword = document.getElementById("user-password").value;
+  const dbRef = ref(connectDB, 'doctors/');
+  onValue(dbRef, (snapshot) => {
+    let loggedIn = false; // Biến để kiểm tra xem người dùng có đăng nhập thành công không.
+    
+    snapshot.forEach((childSnapshot) => {
+      const childData = childSnapshot.val();
+     
+      
+      if (childData.Account == userName && childData.PhoneBS == userPassword) {
+        const loggedInDoctor = {
+          name: childData.NameBS,
+          id: childData.IDBS
+        };
+        localStorage.setItem('loggedInDoctor', JSON.stringify(loggedInDoctor));
         Swal.fire({
           icon: 'success',
           title: 'Đăng nhập thành công!',
@@ -60,7 +116,13 @@ function loginUser() {
     }
   });
 }
-document.getElementById("submit-login").addEventListener("click", loginUser);
+
+function checkLogin() {
+  if (!loginUser()) {
+    loginDoctor();
+  }
+}
+document.getElementById("submit-login").addEventListener("click", checkLogin);
 
 
 function isValidEmail(email) {

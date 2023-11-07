@@ -5,7 +5,10 @@
     margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
-
+a {
+    color: #1977cc;
+    text-decoration: none;
+  }
 .wrapper {
     padding-top: 50px;
     max-width: 960px;

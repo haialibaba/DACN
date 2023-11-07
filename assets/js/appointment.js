@@ -141,20 +141,26 @@ function addAppointment() {
 
     // Sử dụng phương thức set để thêm cuộc hẹn vào 'appointment' với khóa 'newID'
     set(appointmentRef, newAppointment)
-        .then(() => {
-            swal.fire({
-                icon: 'success',
-                title: 'Thành công',
-                text: 'Thêm cuộc hẹn thành công.'
-            });
-        })
-        .catch(error => {
-            swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: 'Xảy ra lỗi khi thêm cuộc hẹn vào appointment: ' + error.message
-            });
+    .then(() => {
+        // Reset the fields to empty strings after a successful appointment is added
+        document.getElementById('date').value = "";
+        document.getElementById('department').value = "";
+        document.getElementById('doctor').value = "";
+        document.getElementById('message_apointment').value = "";
+
+        swal.fire({
+            icon: 'success',
+            title: 'Thành công',
+            text: 'Thêm cuộc hẹn thành công.'
         });
+    })
+    .catch(error => {
+        swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Xảy ra lỗi khi thêm cuộc hẹn vào appointment: ' + error.message
+        });
+    });
 }
 
 document.getElementById('submit_appointment').addEventListener('click', addAppointment);

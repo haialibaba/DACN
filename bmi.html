@@ -19,7 +19,7 @@
         <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link href="./assets/css/style.css" rel="stylesheet">
-        <link href="./assets/css/calorie.css" rel="stylesheet">
+        <link href="./assets/css/bmi.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
       </head>
 <body>
@@ -84,83 +84,50 @@
         </div>
     
       </header><!-- End Header -->
+
       <main id="main">
         <section id="appointment" class="appointment section-bg hearth-check">
-            <div id="body-background">
-                <!-- <div id="calorie-output" class="my-4">
-                        <h1 class="text-center">Your result</h1>
-                        <h2 class="text-center" id="result"></h2>
-                    </div> -->
-                <div id="calorie-form">
-                    <h1 class="text-center fw-bold mb-4">Calorie Calculator</h1>
-                    <form>
-                        <div class="form-group">
-                            <input type="number" class="form-control" id="age" placeholder="Enter age" />
+        <div id="page1">
+            <div class="box row" style="margin-right: 15px;">
+                <div class="text1 col-lg-6 col-md-12 col-sm-12">
+                    <h1><strong> BMI CALCULATOR</strong></h1>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p>Gender</p>
+                            <input type="radio" id="genderM" name="gender" value="Male" checked="">
+                            <label for="genderM">Male</label>
+                            <input type="radio" id="genderF" name="gender" value="Female">
+                            <label for="genderM">Female</label>
                         </div>
-    
-                        <div class="form-group">
-                            <select class="form-control" id="gender">
-                                <option selected>Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p>Age</p>
+                            <input type="number" id="age" oninput="this.value=Math.abs(this.value)">
+                            <p>Height (in cm)</p>
+                            <input type="number" id="height" oninput="this.value=Math.abs(this.value)">
                         </div>
-    
-                        <div class="form-group">
-                            <input type="number" class="form-control" id="height" placeholder="Enter height in cm" />
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p>Weight (in kg)</p>
+                            <input type="number" id="weight" oninput="this.value=Math.abs(this.value)">
                         </div>
-    
-                        <div class="form-group">
-                            <input type="number" class="form-control" id="weight" placeholder="Enter weight in kg" />
+                        <br>
+                        <div class="calculate col-lg-12 col-md-12 col-sm-12">
+                            <button id="btn" class="mt-2 px-5">Calculate</button>
                         </div>
-    
-                        <div class="form-group">
-                            <select id="cactivity" class="form-control">
-                                <option selected="selected">Select activity...</option>
-                                <option value="1">
-                                    Basal Metabolic Rate (BMR)
-                                </option>
-                                <option value="1.2">
-                                    Sedentary: little or no exercise
-                                </option>
-                                <option value="1.375">
-                                    Light: exercise 1-3 times/week
-                                </option>
-                                <option value="1.465">
-                                    Moderate: exercise 4-5 times/week
-                                </option>
-                                <option value="1.55">
-                                    Active: daily exercise or intense exercise
-                                    3-4 times/week
-                                </option>
-                                <option value="1.725">
-                                    Very Active: intense exercise 6-7 times/week
-                                </option>
-                                <option value="1.9">
-                                    Extra Active: very intense exercise daily,
-                                    or physical job
-                                </option>
-                            </select>
-                        </div>
-    
-                        <div class="d-flex justify-content-center">
-                            <button type="button" id="submit" class="btn" onclick="submit">
-                                Calculate
-                            </button>
-                        </div>
-                    </form>
-    
-                    <div id="calorie-output" class="mt-4">
-                        <h2 class="text-center">Your result will appear here:</h2>
-                        <p class="text-center" id="result"></p>
                     </div>
                 </div>
-    
+                <div class="right col-lg-3 col-md-6 col-sm-8">
+                    <img class="card-img" src="https://www.cdc.gov/healthyweight/images/assessing/bmi-adult-fb-600x315.jpg" alt="Card image cap">
+                    <div class="result">
+                        <h5 id="result" class="card-title">Body Mass Index (BMI) is a person’s weight in kilograms
+                            divided by the square of height in meters.</h5>
+                        <div class="button">
+                            <a href="https://www.cdc.gov/healthyweight/assessing/bmi/index.html" class="btn btn-primary learn-more" target="_blank">Learn More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-          </section><!-- End Appointment Section -->
-
-
+        </div>
+        </section>
     
         <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
@@ -318,8 +285,6 @@
   
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-
     <!-- Vendor JS Files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -330,7 +295,7 @@
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/calorie.js"></script>
+    <script src="assets/js/bmi.js"></script>
   
 </body>
 </html>

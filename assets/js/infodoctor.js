@@ -15,24 +15,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Lấy tham chiếu đến các button và các div thông tin tương ứng
-const btnShows = document.querySelectorAll("i[id^='btn-show']");
-const infos = document.querySelectorAll("div[id^='content-info']");
+////////// Nút ẩn hiện 
+function hideButton() {
+  // Lấy tham chiếu đến các button và các div thông tin tương ứng
+  const btnShows = document.querySelectorAll("i[id^='btn-show']");
+  const infos = document.querySelectorAll("div[id^='content-info']");
 
-// Thêm sự kiện click cho từng button
-btnShows.forEach((btnShows, index) => {
-  btnShows.addEventListener("click", () => {
-    // Kiểm tra trạng thái hiện tại của thông tin
-    if (infos[index].style.display === "none") {
-      // Nếu đang ẩn, hiển thị thông tin
-      infos[index].style.display = "block";
-    } else {
-      // Nếu đang hiển thị, ẩn thông tin
-      infos[index].style.display = "none";
-    }
+  // Thêm sự kiện click cho từng button
+  btnShows.forEach((btnShows, index) => {
+    btnShows.addEventListener("click", () => {
+      // Kiểm tra trạng thái hiện tại của thông tin
+      if (infos[index].style.display === "none") {
+        // Nếu đang ẩn, hiển thị thông tin
+        infos[index].style.display = "block";
+      } else {
+        // Nếu đang hiển thị, ẩn thông tin
+        infos[index].style.display = "none";
+      }
+    });
   });
-});
+}
 
+///////// Nút chi tiết và đánh giá
 const btnInfo = document.getElementById("btn-info");
 const btnReview = document.getElementById("btn-review");
 const tab1 = document.getElementById("tab-1");
@@ -46,7 +50,6 @@ function twoButtonClick(btnInfo, btnReview, tab1, tab2) {
       btnReview.classList.remove('dock');
       tab1.style.display = 'block';
       tab2.style.display = 'none';
-      // contentClick(btnShow)
     }
   })
 
@@ -56,13 +59,11 @@ function twoButtonClick(btnInfo, btnReview, tab1, tab2) {
       btnInfo.classList.remove('dock');
       tab2.style.display = 'block';
       tab1.style.display = 'none';
-      // contentClick(btnShow)
     }
   })
 }
 
-twoButtonClick(btnInfo, btnReview, tab1, tab2)
-
+/////////////// hiển thị thông tin bác sĩ với url
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams)
 const id = urlParams.get('id');
@@ -90,5 +91,9 @@ function displayDetailDoctor(IDBS, NameN) {
 
   })
 }
-
-displayDetailDoctor(id, NameN);
+////////// run khi load trang
+document.addEventListener("DOMContentLoaded", function () {
+  hideButton()
+  twoButtonClick(btnInfo, btnReview, tab1, tab2)
+  displayDetailDoctor(id, NameN);
+})
