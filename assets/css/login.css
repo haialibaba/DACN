@@ -176,6 +176,7 @@
     font-size: 16px;
     padding-bottom: 4px;
     text-decoration: none;
+    cursor:pointer;
   }
   
   /* invalid */
@@ -256,3 +257,90 @@
         top: 150px;
     }
   }
+
+  .modal__add-forgetPass{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: none;
+}
+.modal__add-forgetPass-content{
+  top: 35%;
+left: 35%;
+height: 25%;
+width: 25%;
+padding-top: 8px;
+padding-bottom: 16px;
+background-color: white;
+z-index: 1000;  
+border-radius: 5px;
+animation: .3s ease-in transitionY;
+position: fixed;
+}
+.modal__add-forgetPass-overlay{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+.modal__add-User-email{
+  margin-top: 12px;
+}
+.modal__add-User-email input{
+  width: 70%;
+  text-align: left;
+  padding: 8px;
+  font-size: 14px;
+  font-family: sans-serif;
+  color: #333;
+  border: 1px solid #333;
+}
+.modal__add-product-btn{
+  margin-top: 12px;
+}
+.modal__add-product-btn-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  transition: linear 0.1s;
+}
+
+.modal__add-product-btn-close i{
+  font-size: 22px;
+}
+
+.modal__add-product-btn-close:hover{
+  cursor: pointer;
+  color: #FCB35F;
+}
+.modal__add-product-header{
+  margin-top: 8px;
+}
+
+.modal__add-product-header p{
+  font-size: 15px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #333;
+}
+.modal__add-product-btn button{
+  background-color: #04AA6D;
+  border: 1px solid #04AA6D;
+  color: white;
+  font-size: 16px;
+  font-family: sans-serif;
+  transition: linear 0.2s;
+  width: 70%;
+  text-align: center;
+  padding: 8px
+}
+.modal__add-product-btn button:hover{
+  cursor: pointer;
+  background-color: white;
+  color: #333;
+}

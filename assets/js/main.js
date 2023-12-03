@@ -288,14 +288,20 @@
 
 displayAdminName();
  
- 
- 
      function logoutUser() {
    localStorage.removeItem('loggedInUser');
    localStorage.removeItem('loggedInDoctor');
    localStorage.removeItem('loggedInUserAdmin');
    localStorage.removeItem('isLoggedIn');
-   window.location.href = "index.html"; 
+   Swal.fire({
+    icon: 'success',
+    title: 'Đăng xuất thành công!',
+    text: 'Bạn đã đăng xuất thành công.',
+ }).then((result) => {
+    if (result.isConfirmed) {
+       window.location.href = "index.html";
+    }
+ });
  }
  
  

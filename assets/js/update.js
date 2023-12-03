@@ -110,7 +110,7 @@ function displayMedicalrecords() {
   onValue(db, (snap) => {
     snap.forEach((childSnap) => {
       const childDt = childSnap.val();
-      if (childDt.IDKH == loggedInUser.id) {
+      if (childDt.IDTK == loggedInUser.id) {
         const data = `
         <li>Loại bệnh: ${childDt.Info}</li>
         <li>Triệu chứng: ${childDt.PatientCondition}</li>
@@ -119,8 +119,8 @@ function displayMedicalrecords() {
         document.getElementById("medicalrecords").innerHTML = data;
       }
     })
-
   })
+  
 }
 
 window.onload = () => {
@@ -128,6 +128,11 @@ window.onload = () => {
   displayMedicalrecords();
 };
 
+function isValidPhoneNumber(phoneNumber) {
+  // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại ở Việt Nam
+  var phonePattern = /^(0[0-9]{9})$/;
+  return phonePattern.test(phoneNumber);
+}
 
 const dataToget = document.getElementById("submit-Update");
 
@@ -138,7 +143,21 @@ function getDatainfoUser() {
   const phoneUser = document.getElementById('phone_number').value;
   const ageUser = document.getElementById('Age_number').value;
   const genderUser = document.getElementById('gender').value;
-
+  if (nameUser === "" || birthUser === "" || phoneUser === ""  || ageUser === "" || genderUser === "") {
+    Swal.fire({
+      icon: 'error',
+      title: 'Cập nhật thất bại',
+      text: 'Vui lòng  nhập đầy đủ thông tin.',
+    });
+    return;
+  }else if(!isValidPhoneNumber(phoneUser)){
+    Swal.fire({
+      icon: 'error',
+      title: 'Cập nhật thất bại',
+      text: 'Phone không đúng định dạng',
+    });
+    return;
+  }
   const updates = {
     NameKH: nameUser,
     Birth: birthUser,
@@ -146,7 +165,6 @@ function getDatainfoUser() {
     Age: ageUser,
     Sex: genderUser
   };
-  
   const userRef = ref(connectDB, 'account/' + idUser);
   update(userRef, updates)
     .then(() => {
@@ -187,33 +205,31 @@ async function setDataPassword() {
 
     // Kiểm tra input để trống và độ dài mật khẩu mới
     if (oldPassword === '' || newPassword === '' || newPasswordConfirm === '') {
-      alert('Vui lòng điền đầy đủ thông tin.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Cập nhật thất bại',
+        text: 'Vui lòng điền đầy đủ thông tin.',
+      });
       return;
     } else if (newPassword.length < 6) {
-      alert('Mật khẩu phải sử dụng ít nhất 6 ký tự.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Cập nhật thất bại',
+        text: 'Mật khẩu phải sử dụng ít nhất 6 ký tự.',
+      });
       return;
     }
-
-    // Lấy tham chiếu đến người dùng trong Firebase Realtime Database
     const userRef = ref(connectDB, 'account/' + idUser);
     const snapshot = await get(userRef);
-
     if (snapshot.exists()) {
       const userData = snapshot.val();
       const storedPassword = userData.Password; // Giả sử mật khẩu được lưu trong trường "Password" của dữ liệu người dùng
-
-      // Kiểm tra mật khẩu cũ
       if (storedPassword === oldPassword) {
-        // Kiểm tra xác nhận mật khẩu mới
         if (newPassword === newPasswordConfirm) {
-          // Cập nhật mật khẩu mới trong Firebase
           const updates = {
             Password: newPassword
           };
-
           await update(userRef, updates);
-
-          // Hiển thị thông báo cập nhật thành công
           Swal.fire({
             icon: 'success',
             title: 'Cập nhật thành công!',
@@ -241,7 +257,6 @@ async function setDataPassword() {
         })
       }
     } else {
-      // Hiển thị thông báo tài khoản không tồn tại
       showErrorMessage('Tài khoản không tồn tại.');
     }
   } catch (error) {
@@ -249,7 +264,6 @@ async function setDataPassword() {
     showErrorMessage('Lỗi khi cập nhật mật khẩu. Vui lòng thử lại sau.');
   }
 }
-
 function showErrorMessage(message) {
   Swal.fire({
     icon: 'error',
