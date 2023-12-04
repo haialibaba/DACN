@@ -6,7 +6,7 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.wrapper {
+.wrapper1 {
     padding-top: 50px;
     max-width: 960px;
     margin: 30px auto;
@@ -48,4 +48,105 @@
 div.image {
     display: flex;
     justify-content: center;
+}
+
+/*  */
+body {
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+
+.comment-box,
+.post-comment .list1 {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 2px black;
+}
+
+.comment-session {
+    width: 650px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.post-comment .list1 {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.post-comment .list1 .user {
+    display: flex;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.post-comment .list1 .user img {
+    height: 38px;
+    width: 38px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.comment-session .name {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.post-comment .list1 .day {
+    font-size: 12px;
+}
+
+.post-comment .comment-post {
+    padding: 0 0 15px 50px;
+}
+
+/* comment box */
+.comment-box {
+    padding: 10px;
+    overflow: hidden;
+    border: 1px solid;
+}
+
+.comment-box .user {
+    display: flex;
+    width: min-content;
+}
+
+.comment-box .image img {
+    width: 24px;
+    height: 24px;
+    border-right: 10px;
+    border-radius: 50%;
+}
+
+.comment-box textarea {
+    background: #fff;
+    width: 600px;
+    height: 100px;
+    margin: 10px 10px;
+    padding: 10px;
+    resize: inherit;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px black;
+    border: none;
+
+}
+
+.comment-box textarea:focus-visible {
+    box-shadow: inset 0 0 0 1px blue;
+    outline: none;
+}
+
+.comment-box .comment-submit {
+    float: right;
+    padding: 6px 10px;
+    border: none;
+    background: blue;
+    color: antiquewhite;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.comment-box .comment-submit:hover {
+    background: #0076bf;
 }

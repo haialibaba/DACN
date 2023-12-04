@@ -1,3 +1,5 @@
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { get, getDatabase, set, ref, push, child, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
@@ -16,12 +18,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+
+
 function showNew() {
   const dbRef = ref(database, 'new/');
   onValue(dbRef, (snaphost) => {
     snaphost.forEach((childSnaphost) => {
       const childData = childSnaphost.val();
-      if (childData.IDN == "N001") {
+      const newDivNew = document.createElement("div");
+      const Divnew = document.getElementById('news');
+      if (childData.IDTT == "TT001") {
         const detialnew = `
         <div class="divrow">
                 <div class="divcol-sm-6">
@@ -52,8 +58,9 @@ function showNew() {
                 </div>
             </div>
         `;
-        document.getElementById("news").innerHTML = detialnew;
-        document.addEventListener("click", () => {
+        newDivNew.innerHTML = detialnew;
+        Divnew.appendChild(newDivNew);
+        newDivNew.addEventListener("click", () => {
           loadPage('infomationNew.html', childData.IDTT);
         })
       }
@@ -87,12 +94,13 @@ function ListNewShow() {
   </li>
       `;
       newDiv.innerHTML = newPost;
-      const click = document.getElementById('ab');
+      listnew.appendChild(newDiv);
       newDiv.addEventListener("click", () => {
         loadPage('infomationNew.html', childData.IDTT);
+        ListCommentShow(childData.IDTT);
+        addPost(childData.IDTT);
       })
-      listnew.appendChild(newDiv);
-    })
+    });
   });
 }
 
@@ -103,8 +111,15 @@ function loadPage(pageUrl, IDTT) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("data").innerHTML = this.responseText;
+      document.getElementById("dataPost").innerHTML = this.responseText;
       displayNew(IDTT);
+      ListCommentShow(IDTT);
+      const btnComment = document.getElementById("btrComment");
+      btnComment.addEventListener("click", () => {
+        addPost(IDTT);
+      })
+
+
     }
   };
   xhttp.open('GET', pageUrl, true);
@@ -149,10 +164,130 @@ function displayNew(IDTT) {
     </div>`;
         document.getElementById("data-news").innerHTML = detail;
 
+
       }
     })
 
   })
 }
-
 ListNewShow()
+
+
+
+///------------comment-------
+
+const userId = {
+  name: null,
+  image: null,
+  message: null,
+  date: null
+}
+
+
+
+
+function addPost(IDTT) {
+  console.log("fsdfdsgg")
+  const userComment = document.querySelector("#comment-input");
+  const comments = document.querySelector(".post-comment");
+  userId.name = "ha";
+  userId.image = "./o.jpg";
+  userId.message = userComment.value;
+  userId.date = new Date().toLocaleString();
+  let published = `
+  <div class="list1">
+      <div class="user">
+          <div class="user-image">
+              <img src="${userId.image}">
+          </div>
+          <div class="user-meta">
+              <div class="name" id="NameBox">${userId.name}</div>
+              <div class="day" id="DateBox">${userId.date}</div>
+          </div>
+      </div>
+      <div class="comment-post">${userId.message}</div>
+  </div>
+  `;
+  add(IDTT);
+  comments.innerHTML += published;
+  userComment.value = "";
+
+}
+
+
+
+
+
+// // insert comment
+function add(IDTT) {
+
+  const content = document.getElementById('comment-input').value;
+
+  const dbRef = ref(database, 'comment/');
+
+  get(dbRef).then((snapshot) => {
+    let data = snapshot.val() || {};
+
+
+    let highestID = 0;
+    for (const key in data) {
+      if (data[key].id > highestID) {
+        highestID = data[key].id;
+      }
+    }
+
+    const newID = highestID + 1;
+
+
+    const newData = {
+      id: newID,
+      Content: content,
+      Time: new Date().toLocaleString(),
+      IDTK: "TK002",
+      IDTT: IDTT
+    };
+
+
+    set(child(dbRef, newID.toString()), newData);
+
+    alert("Data saved with ID: " + newID);
+  });
+
+}
+// delete
+
+
+// load comment
+function ListCommentShow(IDTT) {
+  const listcomment = document.getElementById('data-comment');
+  const dbRef = ref(database, 'comment/');
+  onValue(dbRef, (snapshot) => {
+    listcomment.innerHTML = '';
+    snapshot.forEach((childSnaphost) => {
+      const childData = childSnaphost.val();
+      const newDivComment = document.createElement("div");
+      if (childData.IDTT == IDTT) {
+        const newPost = `
+              <div class="list1">
+              <div class="user">
+                  <div class="user-image">
+                      <img src="./assets/img/o.jpg">
+                  </div>
+                  <div class="user-meta">
+                      <div class="name">Ha</div>
+                      <div class="day">${childData.Time}</div>
+                  </div>
+              </div>
+              <div class="comment-post">${childData.Content}       
+          </div>
+      `;
+        newDivComment.innerHTML = newPost;
+        listcomment.appendChild(newDivComment);
+      }
+    })
+  })
+}
+
+ListCommentShow();
+
+

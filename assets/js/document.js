@@ -20,9 +20,11 @@ function showNew() {
     onValue(dbRef, (snaphost) => {
         snaphost.forEach((childSnaphost) => {
             const childData = childSnaphost.val();
-            if (childData.IDTT == 'TT006') {
+            const newDivNew = document.createElement("div");
+            const Divnew = document.getElementById('newDocument');
+            if (childData.IDTT == "TT006") {
                 const detialnew = `
-                    <div class="divrow">
+          <div class="divrow">
                   <div class="divcol-sm-6">
                       <img class="link-icon" alt="" src="./assets/img/o.jpg" />
                   </div>
@@ -31,7 +33,7 @@ function showNew() {
   
                           <div class="heading-2">
                               <div class="cch-chn-phng" >
-                              <p>${childData.NameTT}</p>
+                                  <p>${childData.NameTT}</p>
                               </div>
                           </div>
   
@@ -51,9 +53,9 @@ function showNew() {
                   </div>
               </div>
           `;
-                document.getElementById("newDocument").innerHTML = detialnew;
-                console.log(childData.IDTT);
-                document.addEventListener("click", () => {
+                newDivNew.innerHTML = detialnew;
+                Divnew.appendChild(newDivNew);
+                newDivNew.addEventListener("click", () => {
                     loadPage('infomationNew.html', childData.IDTT);
                 })
             }
@@ -80,6 +82,7 @@ function ListNewShow() {
                 </div>
                 <div class="post-info">
                     <p class="post-cat">${childData.NameTT} </p>
+                    
                     <div class="divmb-11">
                     <i class="fa-regular fa-calendar-days"></i>
                         <div class="div3">${childData.TimeUpdate}</div>
@@ -91,11 +94,13 @@ function ListNewShow() {
             </li>
         `;
                 newDiv.innerHTML = newPost;
+                listnew.appendChild(newDiv);
                 newDiv.addEventListener("click", () => {
                     console.log(childData.IDTT);
                     loadPage('infomationNew.html', childData.IDTT);
+                    ListCommentShow(childData.IDTT);
+                    addPost(childData.IDTT);
                 })
-                listnew.appendChild(newDiv);
             }
         })
     })
@@ -104,8 +109,13 @@ function loadPage(pageUrl, IDTT) {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById('data').innerHTML = this.responseText;
+            document.getElementById('data2').innerHTML = this.responseText;
             displayDetailDoctor(IDTT);
+            ListCommentShow(IDTT);
+            const btnComment = document.getElementById("btrComment");
+            btnComment.addEventListener("click", () => {
+                addPost(IDTT);
+            })
         }
     };
     xhttp.open('GET', pageUrl, true);
@@ -158,4 +168,121 @@ function displayDetailDoctor(IDTT) {
 }
 
 ListNewShow()
+
+
+
+const userId = {
+    name: null,
+    image: null,
+    message: null,
+    date: null
+}
+
+
+
+
+function addPost(IDTT) {
+    console.log("fsdfdsgg")
+    const userComment = document.querySelector("#comment-input");
+    const comments = document.querySelector(".post-comment");
+    userId.name = "ha";
+    userId.image = "./o.jpg";
+    userId.message = userComment.value;
+    userId.date = new Date().toLocaleString();
+    let published = `
+    <div class="list1">
+        <div class="user">
+            <div class="user-image">
+                <img src="${userId.image}">
+            </div>
+            <div class="user-meta">
+                <div class="name" id="NameBox">${userId.name}</div>
+                <div class="day" id="DateBox">${userId.date}</div>
+            </div>
+        </div>
+        <div class="comment-post">${userId.message}</div>
+    </div>
+    `;
+    add(IDTT);
+    comments.innerHTML += published;
+    userComment.value = "";
+
+}
+
+
+
+
+
+// // insert comment
+function add(IDTT) {
+
+    const content = document.getElementById('comment-input').value;
+
+    const dbRef = ref(database, 'comment/');
+
+    get(dbRef).then((snapshot) => {
+        let data = snapshot.val() || {};
+
+
+        let highestID = 0;
+        for (const key in data) {
+            if (data[key].id > highestID) {
+                highestID = data[key].id;
+            }
+        }
+
+        const newID = highestID + 1;
+
+
+        const newData = {
+            id: newID,
+            Content: content,
+            Time: new Date().toLocaleString(),
+            IDTK: "TK002",
+            IDTT: IDTT
+        };
+
+
+        set(child(dbRef, newID.toString()), newData);
+
+        alert("Data saved with ID: " + newID);
+    });
+
+}
+// delete
+
+
+// load comment
+function ListCommentShow(IDTT) {
+    const listcomment = document.getElementById('data-comment');
+    const dbRef = ref(database, 'comment/');
+    onValue(dbRef, (snapshot) => {
+        listcomment.innerHTML = '';
+        snapshot.forEach((childSnaphost) => {
+            const childData = childSnaphost.val();
+            const newDivComment = document.createElement("div");
+            if (childData.IDTT == IDTT) {
+                const newPost = `
+                <div class="list1">
+                <div class="user">
+                    <div class="user-image">
+                        <img src="./assets/img/o.jpg">
+                    </div>
+                    <div class="user-meta">
+                        <div class="name">Ha</div>
+                        <div class="day">${childData.Time}</div>
+                    </div>
+                </div>
+                <div class="comment-post">${childData.Content}       
+            </div>
+        `;
+                newDivComment.innerHTML = newPost;
+                listcomment.appendChild(newDivComment);
+            }
+        })
+    })
+}
+
+ListCommentShow();
+
 

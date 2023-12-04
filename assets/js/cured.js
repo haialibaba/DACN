@@ -21,18 +21,20 @@ function showNew() {
     onValue(dbRef, (snaphost) => {
         snaphost.forEach((childSnaphost) => {
             const childData = childSnaphost.val();
-            if (childData.IDN == "N004") {
+            const newDivNew = document.createElement("div");
+            const Divnew = document.getElementById('newCured');
+            if (childData.IDTT == "TT001") {
                 const detialnew = `
           <div class="divrow">
                   <div class="divcol-sm-6">
-                      <img class="link-icon" alt="" src="./o.jpg" />
+                      <img class="link-icon" alt="" src="./assets/img/o.jpg" />
                   </div>
                   <div class="divcol-sm-61">
                       <div class="divpl-15">
   
                           <div class="heading-2">
                               <div class="cch-chn-phng" >
-                              <p>${childData.NameTT}</p>
+                                  <p>${childData.NameTT}</p>
                               </div>
                           </div>
   
@@ -52,8 +54,9 @@ function showNew() {
                   </div>
               </div>
           `;
-                document.getElementById("newCured").innerHTML = detialnew;
-                document.addEventListener("click", () => {
+                newDivNew.innerHTML = detialnew;
+                Divnew.appendChild(newDivNew);
+                newDivNew.addEventListener("click", () => {
                     loadPage('infomationNew.html', childData.IDTT);
                 })
             }
@@ -100,9 +103,7 @@ function ListNewShow() {
                     loadPage('infomationNew.html', childData.IDTT);
                 })
                 listnew.appendChild(newDiv);
-
-
-            }
+            };
         })
     })
 }
@@ -111,7 +112,7 @@ function loadPage(pageUrl, IDTT) {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById('data').innerHTML = this.responseText;
+            document.getElementById('data3').innerHTML = this.responseText;
             displayDetailDoctor(IDTT);
         }
     };

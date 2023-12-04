@@ -5,25 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="assets/css/infomation.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="assets/css/infomation.css" rel="stylesheet">;
     <title>Bootstrap Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <base href="http://127.0.0.1:5500/">
+
+
 </head>
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrapper1">
         <div class="main">
             <div class="content" id="data-news">
 
             </div>
         </div>
+
+        <div class="comment-session">
+
+            <div class="comment-box" id="comment-form">
+                <div class="user">
+                    <div class="image">
+                        <img src="assets/img/o.jpg">
+                    </div>
+                    <div class="name">ha</div>
+                </div>
+                <form method="post">
+                    <textarea id="comment-input" required></textarea>
+
+                </form>
+                <button class="comment-submit" id="btrComment">Comment</button>
+            </div>
+
+            <div class="post-comment" id="data-comment">
+                <!-- <div class="list">
+                    <div class="user">
+                        <div class="user-image">
+                            <img src="./o.jpg">
+                        </div>
+                        <div class="user-meta">
+                            <div class="name">Ha</div>
+                            <div class="day">10 ngay</div>
+                        </div>
+                    </div>
+                    <div class="comment-post">fsdfgahafsadfdfa sdfa fa fsdaf adf af adf</div>
+                </div> -->
+            </div>
+        </div>
+
     </div>
+
     <script src="assets/js/post.js" type="module"></script>
+
+
 </body>
 
 </html>

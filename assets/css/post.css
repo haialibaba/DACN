@@ -206,3 +206,20 @@ ul.posts li .post-info p.post-cat {
 }
 
 /*-phan trang-*/
+.button-container {
+    float: right;
+    margin-right: 5px;
+}
+
+.update-button,
+.delete-button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.update-button:hover,
+.delete-button:hover {
+    opacity: 0.8;
+    background-color: beige;
+}
