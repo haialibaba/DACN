@@ -1,7 +1,12 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+
 import { getDatabase, ref, set, get, child, onValue, limitToLast, query,update } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -28,7 +33,9 @@ function loginUser() {
     
     snapshot.forEach((childSnapshot) => {
       const childData = childSnapshot.val();
+
       if (childData.Account == userName && childData.Password == userPassword) {
+
         const loggedInUser = {
           name: childData.NameKH,
           id: childData.IDTK
@@ -53,6 +60,7 @@ function loginUser() {
       }
     });
    
+
   });
 }
 
@@ -77,11 +85,13 @@ function loginDoctor() {
           icon: 'success',
           title: 'Đăng nhập thành công!',
           text: 'Bạn đã đăng nhập thành công.',
-        })
+        });
+
         localStorage.setItem('isLoggedIn', 'true');
         window.location.href = "index.html";
         loggedIn = true; // Đánh dấu người dùng đã đăng nhập thành công.
         document.getElementById("appointment").style.display = "block";
+
       }else{
         Swal.fire({
           icon: 'error',
@@ -90,6 +100,7 @@ function loginDoctor() {
         });
       }
     });
+
   });
 }
 
@@ -112,7 +123,9 @@ function isValidPhoneNumber(phoneNumber) {
   return phonePattern.test(phoneNumber);
 }
 
+
 async function registerUser() {
+
   var newAccount = document.getElementById("new-user-account").value;
   var newPassword = document.getElementById("new-user-password").value;
   var newName = document.getElementById("new-user-name").value;
@@ -187,6 +200,7 @@ async function registerUser() {
       title: 'Đăng ký thất bại',
       text: 'Phone không đúng định dạng',
     });
+
     return;
   }
   else {
@@ -200,9 +214,11 @@ async function registerUser() {
       window.location.href = "login.html";
     }
   });
+
   }
 }
 document.getElementById("register").addEventListener("click", registerUser);
+
 
 async function accountExists(account) {
   try {
@@ -320,6 +336,7 @@ async function addAccountToDatabase(account, password, email, phoneKH, nameKH) {
   } catch (error) {
     console.error("Error adding account to database:", error);
   }
+
 }
 
 function splitSTringIDAccount(IDTK) {
@@ -339,6 +356,7 @@ function splitSTringIDAccount(IDTK) {
     return null;
   }
 }
+
 async function emailExists(email) {
   try {
     const accountRef = ref(connectDB, 'account/');
@@ -458,3 +476,4 @@ function generateRandomPassword(length) {
   return randomPassword;
 }
 document.getElementById("btnuserAdd").addEventListener("click", checkEmailAndShowMessage);
+

@@ -10,7 +10,9 @@ jQuery(function ($) {
         result = $("#result");
 
         // console.log(gender, age, height, weight, activity);
+
         var msjBMR, rhbBMR, BMR, output;
+
         if (age === "" || gender === "" || height === "" || weight === "" || activity === "")
             alert("All fields are required. Please fill and try again!");
 

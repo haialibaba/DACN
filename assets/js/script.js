@@ -161,9 +161,10 @@ fetchDoctorFromFirebase((data) => {
   // getAllDoctor(data);
   fetchDataAndDisplayPage(currentPage, data);
 })
-renderContent()
+
 /////////////////////////////////////////////////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function () {
+  renderContent()
   ///////////////// All doctor////////////////////////////////////////
   const all = document.getElementById('All');
   all.addEventListener("click", function (event) {
@@ -209,15 +210,16 @@ function renderContent() {
       <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
     </div>
   </div>
-  </div>
-  
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
   <div class="container d-flex align-items-center">
     <div class="header-left">
-  
+
     </div>
     <h1 class="logo me-auto"><a href="index.html">TicaCare</a></h1>
+
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -225,49 +227,44 @@ function renderContent() {
         <li><a class="nav-link scrollto" href="#services">Services</a></li>
         <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
         <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
-        <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="dropdown"><a href="#"><span>Tools</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Drop Down 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+            <li><a href="post.html">Tin tức</a></li>
+            <li class="dropdown"><a href="#"><span>Chăm sóc sức khỏe</span> <i class="bi bi-chevron-right"></i></a>
               <ul>
-                <li><a href="#">Deep Drop Down 1</a></li>
-                <li><a href="#">Deep Drop Down 2</a></li>
-                <li><a href="#">Deep Drop Down 3</a></li>
-                <li><a href="#">Deep Drop Down 4</a></li>
-                <li><a href="#">Deep Drop Down 5</a></li>
+                <li><a href="chuandoanbenhtim.html">Kiểm tra tim mạch</a></li>
+                <li><a href="water-drinking.html">Quản lý lượng nước uống</a></li>
+                <li><a href="calorie.html">Tính toán calories cần thiết</a></li>
+                <li><a href="trainning.html">Gợi ý tập luyện</a></li>
+                <li><a href="bmi.html">Tính BMI</a></li>
               </ul>
             </li>
-            <li><a href="#">Drop Down 2</a></li>
-            <li><a href="#">Drop Down 3</a></li>
-            <li><a href="#">Drop Down 4</a></li>
+            <li><a href="tips.html">Tips</a></li>
+            <li><a href="covid_section.html">Covid</a></li>
           </ul>
         </li>
         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
-  
-    <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
+    </nav><!-- .navbar -->
+
+   
+    <a href="#appointment" class="appointment-btn scrollto" id="appointment_btn" style="display: none;"><span class="d-none d-md-inline">Make an</span>
       Appointment</a>
-  
+
     <div class="header__has__login" style="display: flex;" id="hasLogin">
-      <img src="./assets/img/shizuka.jpg" alt="">
-      <span id="userLogin">admin</span>
-      <ul class="has__login-list">
-        <li class="has__login-item" id="admin"><a href="">Thay đổi thông tin</a></li>
-        <li class="has__login-item"><a href="#" id="logout">Đăng xuất</a></li>
-      </ul>
+      <a href="login.html" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</a>
     </div>
   </div>
-  
-  </header>`
+
+</header><!-- End Header -->`
 
   const newfooter = `<footer id="footer">
-  
+
   <div class="footer-top">
     <div class="container">
       <div class="row">
-  
+
         <div class="col-lg-3 col-md-6 footer-contact">
           <h3>TicaCare</h3>
           <p>
@@ -278,7 +275,7 @@ function renderContent() {
             <strong>Email:</strong> DoAnChuyenNganh@gmail.com<br>
           </p>
         </div>
-  
+
         <div class="col-lg-2 col-md-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
@@ -289,7 +286,7 @@ function renderContent() {
             <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
           </ul>
         </div>
-  
+
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Services</h4>
           <ul>
@@ -301,7 +298,7 @@ function renderContent() {
             <li><i class="bx bx-chevron-right"></i> <a href="#services">Cấp cứu 24/7</a></li>
           </ul>
         </div>
-  
+
         <div class="col-lg-4 col-md-6 footer-newsletter">
           <h4>Join Our Newsletter</h4>
           <p>Hãy tham gia cùng chúng tôi nhé</p>
@@ -309,23 +306,23 @@ function renderContent() {
             <input type="email" name="email"><input type="submit" value="Subscribe">
           </form>
         </div>
-  
+
       </div>
     </div>
   </div>
-  
+
   <div class="container d-md-flex py-4">
-  
+
     <div class="me-md-auto text-center text-md-start">
       <div class="copyright">
         &copy; Copyright <strong><span>TicaCare</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact.
-              You can delete the links only if you purchased the pro version.
-              Licensing information: https://bootstrapmade.com/license/
-              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/TicaCare-free-medical-bootstrap-theme/ -->
-        <a href="#">Welcome to TicaCare</a>
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/TicaCare-free-medical-bootstrap-theme/ -->
+        Welcome to <a href="#">TicaCare</a>
       </div>
     </div>
     <div class="social-links text-center text-md-right pt-3 pt-md-0">
@@ -336,11 +333,14 @@ function renderContent() {
       <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
     </div>
   </div>
-  </footer>
+</footer><!-- End Footer -->
+
   `
 
   document.getElementById('insert-header').innerHTML = newheader;
   document.getElementById('insert-footer').innerHTML = newfooter;
+  displayAdminName();
+  displayUserName();
 }
 ///////////////////////Phân trang////////////////////////////////////////////////////////////////
 const itemsPerPage = 5;
@@ -485,3 +485,77 @@ function fetchDataAndDisplayPageSearch(page, data, name) {
     paginationSearch.appendChild(pageItem);
   }
 }
+
+  // Trong trang bảo mật (index.html)
+  function displayUserName() {
+    const hasLoginElement = document.getElementById("hasLogin");
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  
+  
+    if (isLoggedIn) {
+      const loggedInUserString = localStorage.getItem('loggedInUser');
+      const loggedInDoctorString = localStorage.getItem('loggedInDoctor');
+      if (loggedInUserString) {
+        const loggedInUser = JSON.parse(loggedInUserString);
+        const loggedInUserName = loggedInUser.name;
+        const data = `
+          <img src="./assets/img/shizuka.jpg" alt="">
+          <span id="userLogin">${loggedInUserName}</span>
+          <ul class="has__login-list">
+            <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Thay đổi thông tin</a></li>
+            <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+          </ul>
+        `;
+        hasLoginElement.innerHTML = data;
+        // document.getElementById("appointment").style.display = "block";
+        // document.getElementById("appointment_btn").style.display = "block";
+      }else if(loggedInDoctorString){
+       const loggedInDoctor = JSON.parse(loggedInDoctorString);
+       const loggedInDoctorName = loggedInDoctor.name;
+       const data = `
+         <img src="./assets/img/shizuka.jpg" alt="">
+         <span id="userLogin">${loggedInDoctorName}</span>
+         <ul class="has__login-list">
+           <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Xem lịch hẹn</a></li>
+           <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+         </ul>
+       `;
+       hasLoginElement.innerHTML = data;
+      }
+    }
+  }
+  
+
+ 
+  function displayAdminName() {
+   const hasLoginElement = document.getElementById("hasLogin");
+   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+   if (isLoggedIn) {
+     const loggedInUserString = localStorage.getItem('loggedInUserAdmin');
+     if (loggedInUserString) {
+       const loggedInUser = JSON.parse(loggedInUserString);
+       const loggedInUserName = loggedInUser.name;
+       const data = `
+         <img src="./assets/img/shizuka.jpg" alt="">
+         <span id="userLogin">${loggedInUserName}</span>
+         <ul class="has__login-list">
+         <li class="has__login-item" id="admin" ><a href="" id="permission_account" style="display: block;">Phân quyền</a></li>
+           <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+         </ul>
+       `;
+       hasLoginElement.innerHTML = data;
+       document.getElementById("appointment").style.display = "block";
+       document.getElementById("appointment_btn").style.display = "block";
+     }
+   } 
+ }
+
+      function logoutUser() {
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('loggedInDoctor');
+    localStorage.removeItem('loggedInUserAdmin');
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = "index.html"; 
+  }
+  
+>>>>>>> kiên

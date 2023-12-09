@@ -27,7 +27,8 @@ body {
 }
 
 .infoImg .infoImg,
-.infoUser {
+.infoUser, .infoDoctor {
+
     flex-basis: 50%;
     flex-grow: 1;
     flex-shrink: 1;
@@ -62,6 +63,7 @@ body {
 }
 
 .medicalrecords li {
+    cursor: pointer;
     padding: 2px;
 }
 
@@ -101,7 +103,8 @@ body {
 }
 
 /* Style for the form container */
-.form-container {
+.form-container1 {
+
     display: none;
     max-width: 400px;
     margin: 0 auto;
@@ -210,7 +213,9 @@ input[type="submit"]:hover {
     /* Các quy tắc CSS khác cho pageInfo */
 }
 
-.form-container {
+
+.form-container1{
+
     position: absolute;
     top: 0;
     left: 20%;
@@ -223,7 +228,10 @@ input[type="submit"]:hover {
 
 /* ... các quy tắc CSS khác ... */
 
-.form-container.active {
+
+
+.form-container1.active {
+
     display: block;
 }
 .password-form.active {
@@ -269,7 +277,7 @@ input[type="submit"]:hover {
     top: 0;
     left: 20%;
     width: 100%;
-    height: 115%;
+    height: 125%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
     display: none;
@@ -356,4 +364,53 @@ a {
     background-color: #0077b5; /* Màu nền khi di chuột qua (ví dụ: xanh) */
     color: #fff; /* Màu chữ khi di chuột qua (ví dụ: trắng) */
   }
-  
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.rating-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.stars{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+}
+.star-input {
+    display: none;
+}
+
+.stars label {
+    font-size: 25px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.stars label:hover,
+.stars label:hover~label,
+.stars input:checked~label {
+    color: #ffc107;
+    /* Màu sáng khi hover hoặc đã chọn */
+}
+
+#reviewText {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#ReviewBtn {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#drug_list span{
+    display: flex;
+}

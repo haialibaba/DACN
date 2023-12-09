@@ -104,35 +104,19 @@ function getDataUpdate() {
   })
 }
 
-function displayMedicalrecords() {
-  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  const db = ref(connectDB, 'medicalrecord/');
-  onValue(db, (snap) => {
-    snap.forEach((childSnap) => {
-      const childDt = childSnap.val();
-      if (childDt.IDTK == loggedInUser.id) {
-        const data = `
-        <li>Loại bệnh: ${childDt.Info}</li>
-        <li>Triệu chứng: ${childDt.PatientCondition}</li>
-        `;
-        console.log(data);
-        document.getElementById("medicalrecords").innerHTML = data;
-      }
-    })
-  })
-  
-}
 
-window.onload = () => {
-  dataToStorage();
-  displayMedicalrecords();
-};
 
 function isValidPhoneNumber(phoneNumber) {
   // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại ở Việt Nam
   var phonePattern = /^(0[0-9]{9})$/;
   return phonePattern.test(phoneNumber);
 }
+
+
+window.onload = () => {
+  dataToStorage();
+};
+
 
 const dataToget = document.getElementById("submit-Update");
 
@@ -158,6 +142,7 @@ function getDatainfoUser() {
     });
     return;
   }
+
   const updates = {
     NameKH: nameUser,
     Birth: birthUser,
@@ -165,6 +150,7 @@ function getDatainfoUser() {
     Age: ageUser,
     Sex: genderUser
   };
+
   const userRef = ref(connectDB, 'account/' + idUser);
   update(userRef, updates)
     .then(() => {
@@ -257,6 +243,7 @@ async function setDataPassword() {
         })
       }
     } else {
+
       showErrorMessage('Tài khoản không tồn tại.');
     }
   } catch (error) {
@@ -264,6 +251,7 @@ async function setDataPassword() {
     showErrorMessage('Lỗi khi cập nhật mật khẩu. Vui lòng thử lại sau.');
   }
 }
+
 function showErrorMessage(message) {
   Swal.fire({
     icon: 'error',
@@ -278,11 +266,4 @@ function showErrorMessage(message) {
 }
 
 document.getElementById('update-password').addEventListener('click', setDataPassword)
-
-
-
-
-
-
-
 
