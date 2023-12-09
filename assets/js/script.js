@@ -557,5 +557,3 @@ function fetchDataAndDisplayPageSearch(page, data, name) {
     localStorage.removeItem('isLoggedIn');
     window.location.href = "index.html"; 
   }
-  
->>>>>>> kiên
