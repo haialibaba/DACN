@@ -22,7 +22,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
-
+  <link href="assets/css/doctors.css" rel="stylesheet">
 </head>
 
 <body>
@@ -48,8 +48,6 @@
 
       </div>
       <h1 class="logo me-auto"><a href="index.html">TicaCare</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
@@ -58,21 +56,20 @@
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
           <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Tools</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+              <li><a href="post.html">Tin tức</a></li>
+              <li class="dropdown"><a href="#"><span>Chăm sóc sức khỏe</span> <i class="bi bi-chevron-right"></i></a>
                 <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
+                  <li><a href="chuandoanbenhtim.html">Kiểm tra tim mạch</a></li>
+                  <li><a href="water-drinking.html">Quản lý lượng nước uống</a></li>
+                  <li><a href="calorie.html">Tính toán calories cần thiết</a></li>
+                  <li><a href="trainning.html">Gợi ý tập luyện</a></li>
+                  <li><a href="bmi.html">Tính BMI</a></li>
                 </ul>
               </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
+              <li><a href="tips.html">Tips</a></li>
+              <li><a href="covid_section.html">Covid</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
@@ -80,16 +77,12 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
+     
+      <a href="#appointment" class="appointment-btn scrollto" id="appointment_btn" style="display: none;"><span class="d-none d-md-inline">Make an</span>
         Appointment</a>
 
       <div class="header__has__login" style="display: flex;" id="hasLogin">
-        <img src="./assets/img/shizuka.jpg" alt="">
-        <span id="userLogin">admin</span>
-        <ul class="has__login-list">
-          <li class="has__login-item" id="admin"><a href="">Thay đổi thông tin</a></li>
-          <li class="has__login-item"><a href="#" id="logout">Đăng xuất</a></li>
-        </ul>
+        <a href="login.html" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</a>
       </div>
     </div>
 
@@ -316,7 +309,7 @@
     </section><!-- End Services Section -->
 
     <!-- ======= Appointment Section ======= -->
-    <section id="appointment" class="appointment section-bg">
+    <section id="appointment" class="appointment section-bg" style="display: none;">
       <div class="container">
 
         <div class="section-title">
@@ -324,8 +317,8 @@
           <p>Hãy liên hệ ngay với chúng tôi để có thể trải nghiệm những dịch vụ tốt nhất.</p>
         </div>
 
-        <form action="" method="post" role="form" class="php-email-form">
-          <div class="row">
+        <div class="php-email-form">
+          <!-- <div class="row">
             <div class="col-md-4 form-group">
               <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4"
                 data-msg="Please enter at least 4 chars">
@@ -341,35 +334,28 @@
                 data-rule="minlen:4" data-msg="Please enter at least 4 chars">
               <div class="validate"></div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-md-4 form-group mt-3">
-              <input type="datetime" name="date" class="form-control datepicker" id="date"
-                placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <input type="datetime-local" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group mt-3">
               <select name="department" id="department" class="form-select">
-                <option value="">Select Department</option>
-                <option value="Department 1">Department 1</option>
-                <option value="Department 2">Department 2</option>
-                <option value="Department 3">Department 3</option>
+               
               </select>
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group mt-3">
               <select name="doctor" id="doctor" class="form-select">
-                <option value="">Select Doctor</option>
-                <option value="Doctor 1">Doctor 1</option>
-                <option value="Doctor 2">Doctor 2</option>
-                <option value="Doctor 3">Doctor 3</option>
+               
               </select>
               <div class="validate"></div>
             </div>
           </div>
 
           <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
+            <textarea class="form-control" name="message" id="message_apointment" rows="5" placeholder="Message (Optional)"></textarea>
             <div class="validate"></div>
           </div>
           <div class="mb-3">
@@ -377,8 +363,8 @@
             <div class="error-message"></div>
             <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
           </div>
-          <div class="text-center"><button type="submit">Make an Appointment</button></div>
-        </form>
+          <div class="text-center"><button type="submit" id="submit_appointment">Make an Appointment</button></div>
+        </div>
 
       </div>
     </section><!-- End Appointment Section -->
@@ -861,47 +847,6 @@
       <div class="chat-button" id="chat-button">Chat</div>
     </div>
 
-    <!-- BOX CHAT -->
-
-    <div class="box-chat_wrapped">
-      <div class="chat-container">
-        <div class="chat-header">
-          <img src="/assets/img/shizuka.jpg" alt="" class="chat-header_img">
-          <div class="chat-header_text">
-            <div class="chat-header_wrapname">
-              <p class="chat-header_name">Bệnh viện TicaCare</p>
-              <i class="fa-solid fa-check icon-header_chat"></i>
-            </div>
-
-            <p class="chat-header_title">Do Messenger cung cấp</p>
-          </div>
-
-          <div class="chat-header_button">
-            <i class="fa-solid fa-circle-xmark icon-endchat"></i>
-            <i class="fa-solid fa-circle-minus icon-minis"></i>
-          </div>
-
-        </div>
-        <div class="chat-box">
-          <div class="bot-message_wrap">
-            <img src="/assets/img/shizuka.jpg" alt="" class="chat-box_img">
-            <div class="message received">
-              <p>Hello!</p>
-            </div>
-          </div>
-
-          <div class="message sent">
-            <p>Hi there!</p>
-          </div>
-          <!-- More messages here -->
-        </div>
-        <div class="chat-input">
-          <input type="text" id="message-input" placeholder="Type a message...">
-          <button id="send-button">Send</button>
-        </div>
-      </div>
-    </div>
-
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
@@ -1063,15 +1008,22 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+   <!-- Vendor JS Files -->
+   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="assets/vendor/php-email-form/validate.js"></script>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <!-- Template Main JS File -->
+   <script src="assets/js/main.js"></script>
+   <script src="assets/js/info.js" type="module"></script>
+   <!-- <script src="assets/js/script.js" type="module"></script> -->
+   <script src="assets/js/appointment.js" type="module"></script>
+   
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
 </body>
 
 </html>

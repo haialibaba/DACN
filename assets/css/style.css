@@ -1997,7 +1997,7 @@ section {
 .icon-minis,
 .icon-endchat{
   color: rgba(192, 192, 192, 0.6);
-  align-items: center;
+  align-item: center;
   font-size: 30px;
   margin-left: 10px;
   cursor: pointer;
@@ -2047,6 +2047,7 @@ section {
   height: 50px;
   border-radius: 50%;
 }
+
 .chat-input {
   display: flex;
   align-items: center;
@@ -2072,20 +2073,4 @@ input[type="text"] {
   padding: 10px 20px;
   margin-left: 10px;
   cursor: pointer;
-}
-/*------------------Doctor-----------------------------*/
-.doctors button {
-  background: #1977cc;
-  border: 0;
-  padding: 10px 35px;
-  margin: 20px;
-  color: #fff;
-  transition: 0.4s;
-  border-radius: 50px;
-}
-.doctors button:hover{
-  background: #1c84e3;
-}
-#button-show-list a{
-  color: #fff !important;
 }

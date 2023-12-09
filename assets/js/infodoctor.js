@@ -97,5 +97,3 @@ document.addEventListener("DOMContentLoaded", function () {
   twoButtonClick(btnInfo, btnReview, tab1, tab2)
   displayDetailDoctor(id, NameN);
 })
-
-

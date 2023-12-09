@@ -220,3 +220,84 @@
    */
   new PureCounter();
 })()
+    // Trong trang bảo mật (index.html)
+    function displayUserName() {
+   const hasLoginElement = document.getElementById("hasLogin");
+   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+ 
+ 
+   if (isLoggedIn) {
+     const loggedInUserString = localStorage.getItem('loggedInUser');
+     const loggedInDoctorString = localStorage.getItem('loggedInDoctor');
+     if (loggedInUserString) {
+       const loggedInUser = JSON.parse(loggedInUserString);
+       const loggedInUserName = loggedInUser.name;
+       const data = `
+         <img src="./assets/img/shizuka.jpg" alt="">
+         <span id="userLogin">${loggedInUserName}</span>
+         <ul class="has__login-list">
+           <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Thay đổi thông tin</a></li>
+           <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+         </ul>
+       `;
+       hasLoginElement.innerHTML = data;
+       document.getElementById("appointment").style.display = "block";
+       document.getElementById("appointment_btn").style.display = "block";
+     }else if(loggedInDoctorString){
+      const loggedInDoctor = JSON.parse(loggedInDoctorString);
+      const loggedInDoctorName = loggedInDoctor.name;
+      const data = `
+        <img src="./assets/img/shizuka.jpg" alt="">
+        <span id="userLogin">${loggedInDoctorName}</span>
+        <ul class="has__login-list">
+          <li class="has__login-item" id="admin"><a href="MedicalRecord.html" id="info-user">Hồ sơ bệnh án</a></li>
+          <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Xem lịch hẹn</a></li>
+          <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+        </ul>
+      `;
+      hasLoginElement.innerHTML = data;
+     }
+   }
+ }
+ 
+ displayUserName();
+
+ function displayAdminName() {
+  const hasLoginElement = document.getElementById("hasLogin");
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+
+  if (isLoggedIn) {
+    const loggedInUserString = localStorage.getItem('loggedInUserAdmin');
+    if (loggedInUserString) {
+      const loggedInUser = JSON.parse(loggedInUserString);
+      const loggedInUserName = loggedInUser.name;
+      const data = `
+        <img src="./assets/img/shizuka.jpg" alt="">
+        <span id="userLogin">${loggedInUserName}</span>
+        <ul class="has__login-list">
+        <li class="has__login-item" id="admin" ><a href="" id="permission_account" style="display: block;">Phân quyền</a></li>
+          <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
+        </ul>
+      `;
+      hasLoginElement.innerHTML = data;
+      document.getElementById("appointment").style.display = "block";
+      document.getElementById("appointment_btn").style.display = "block";
+    }
+  } 
+}
+
+displayAdminName();
+ 
+ 
+ 
+     function logoutUser() {
+   localStorage.removeItem('loggedInUser');
+   localStorage.removeItem('loggedInDoctor');
+   localStorage.removeItem('loggedInUserAdmin');
+   localStorage.removeItem('isLoggedIn');
+   window.location.href = "index.html"; 
+ }
+ 
+ 
+ 
