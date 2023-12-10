@@ -1,4 +1,4 @@
-.overlay {
+.overlay, .overlayForm, .overlayPassForm{
     display: none;
     position: fixed;
     top: 0;
@@ -254,4 +254,72 @@ label {
 
 #accept:hover {
     background-color: #0056b3;
+}
+
+
+/* Form container */
+.password-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+}
+
+/* Close button */
+.close-password {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.close-pass {
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+}
+
+/* Form labels and inputs */
+.form {
+    display: grid;
+    gap: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+#Create-MR {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#Create-MR:hover {
+    background-color: #45a049;
+}
+
+.button-update{
+    display: flex;
+    justify-content: center;
+}
+.container-form input {
+    padding: 5px;
+    margin: 5px;
 }

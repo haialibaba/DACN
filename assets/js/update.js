@@ -42,12 +42,20 @@ function dataToStorage() {
                   <div>Giới tính: ${childData.Sex}</div>
               </div>
               <div class="updateUser">
-                  <button class="updateInfo" id="updateInfo"  type="button" onclick="toggleDiv(),${getDataUpdate()}">Sửa thông tin</button>
-                  <button class="updatePass" type="button" onclick="togglePass()">Đổi mật khẩu</button>
+                  <button class="updateInfo" id="updateInfo" type="button" >Sửa thông tin</button>
+                  <button class="updatePass" id="changePass" type="button" ">Đổi mật khẩu</button>
               </div>`;
         
         if (data !== null) {
           data.innerHTML = detailUser;
+          document.getElementById('updateInfo').addEventListener('click', ()=>{
+            document.getElementById("overlayForm").style.display = "block";
+            getDataUpdate()
+          })
+          document.getElementById('changePass').addEventListener('click', ()=>{
+            document.getElementById("overlayPassForm").style.display = "block";
+            
+          })
         }
       }
 
@@ -184,7 +192,8 @@ dataToget.addEventListener('click', getDatainfoUser);
 async function setDataPassword() {
   try {
     // Lấy các giá trị từ các trường nhập liệu
-    const idUser = document.getElementById('id_kh').value;
+    const idUser = loggedInUserID;
+    console.log(idUser);
     const oldPassword = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
     const newPasswordConfirm = document.getElementById('confirm-password').value;

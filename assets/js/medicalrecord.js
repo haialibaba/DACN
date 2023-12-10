@@ -188,8 +188,8 @@ function displayMedicine(IDTK, data, data2) {
                 <input type="text" id="medicineName1">
                 </span>
                 <span>Ngày uống: <select class="timesSelect1"></select>
-                <span>lần</span></span>
-                <span>Mỗi lần: <select class="pillSelect1"></select><span>viên</span></span>
+                <span>lần</span><span>Mỗi lần: <select class="pillSelect1"></select><span>viên</span></span></span>
+                
                 <span>Ghi chú: <input type="text" id="note1"></span>
             </div>
         </li>
@@ -198,8 +198,8 @@ function displayMedicine(IDTK, data, data2) {
                 <span>2.Thuốc: 
                 <input type="text" id="medicineName2">
                 </span>
-                <span>Ngày uống: <select class="timesSelect2"></select><span>lần</span></span>
-                <span>Mỗi lần: <select class="pillSelect2"></select><span>viên</span></span>
+                <span>Ngày uống: <select class="timesSelect2"></select><span>lần</span><span>Mỗi lần: <select class="pillSelect2"></select><span>viên</span></span></span>
+                
                 <span>Ghi chú: <input type="text" id="note2"></span>
             </div>
         </li>
@@ -208,8 +208,8 @@ function displayMedicine(IDTK, data, data2) {
                 <span>3.Thuốc: 
                 <input type="text" id="medicineName3">
                 </span>
-                <span>Ngày uống: <select class="timesSelect3"></select><span>lần</span></span>
-                <span>Mỗi lần: <select class="pillSelect3"></select><span>viên</span></span>
+                <span>Ngày uống: <select class="timesSelect3"></select><span>lần</span><span>Mỗi lần: <select class="pillSelect3"></select><span>viên</span></span></span>
+                
                 <span>Ghi chú: <input type="text" id="note3"></span>
             </div>
         </li>
@@ -233,8 +233,8 @@ function addMedicine() {
         const data = `<div>
                           <span>${next}.Thuốc: 
                           <input type="text" id="medicineName${next}"></span>
-                          <span>Ngày uống: <select class="timesSelect${next}"></select><span>lần</span></span>
-                          <span>Mỗi lần: <select class="pillSelect${next}"></select><span>viên</span></span>
+                          <span>Ngày uống: <select class="timesSelect${next}"></select><span>lần</span><span>Mỗi lần: <select class="pillSelect${next}"></select><span>viên</span></span></span>
+                          
                           <span>Ghi chú: <input type="text" id="note${next}"></span>
                       </div>`
         Medicinbutton.innerHTML = data;
@@ -256,6 +256,24 @@ function addOption(classname) {
         })
     }
 }
+////Hàm thêm lựa chọn khách hàng
+function addOptionKH(data) {
+    var selectElement = document.getElementById("id_user");
+    selectElement.innerHTML = "";
+    const accounts = Object.values(data);
+    for (const childData of accounts) {
+        var option = document.createElement('option');
+        option.value = childData.IDTK;
+        option.text = `${childData.IDTK} - ${childData.NameKH}`;
+        selectElement.add(option);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchKHFromFirebase((data) => {
+        addOptionKH(data)
+    });
+})
 ////Hàm đưa đơn thuốc vô mảng
 function receiveInfo(i) {
     const medicineName = document.getElementById('medicineName' + i).value;

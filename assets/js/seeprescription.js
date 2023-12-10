@@ -211,5 +211,5 @@ function splitSTringIDMR(IDDG) {
         return null;
     }
 }
-displayMedicalrecords();
+displayMedicalrecords(0);
 

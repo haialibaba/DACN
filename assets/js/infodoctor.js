@@ -14,7 +14,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-
+////////////////////////////////////////////////////////////////
+// Hàm để lấy dữ liệu tài khoản từ Firebase
+function fetchRVFromFirebase(callback) {
+  const dbRef = ref(database, 'review/'); // Thay 'doctors' bằng đường dẫn thực của bạn
+  onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      callback(data);
+  });
+}
+function fetchKHFromFirebase(callback) {
+  const dbRef = ref(database, 'account/'); // Thay 'doctors' bằng đường dẫn thực của bạn
+  onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      callback(data);
+  });
+}
 ////////// Nút ẩn hiện 
 function hideButton() {
   // Lấy tham chiếu đến các button và các div thông tin tương ứng
@@ -96,4 +111,40 @@ document.addEventListener("DOMContentLoaded", function () {
   hideButton()
   twoButtonClick(btnInfo, btnReview, tab1, tab2)
   displayDetailDoctor(id, NameN);
+  fetchRVFromFirebase((data) => {
+    fetchKHFromFirebase((data1) => {
+      displayRV(data, data1);
+    });
+  });
 })
+///////////////Hiển thị đánh giá
+function displayRV(data, data1){
+  const review = Object.values(data).filter((doctor) => doctor.IDBS === id);
+  var reviewsList = document.getElementById('userReviews');
+  reviewsList.innerHTML = "";
+  for(const child of review){
+    const accounts = Object.values(data1).filter((account) => account.IDTK === child.IDTK);
+    for(const childata of accounts){
+      var listItem = document.createElement('li');
+        listItem.classList.add('comment'); // Thêm class 'comment' cho CSS styling
+
+        // Tạo nội dung cho thẻ li
+        var reviewContent = `
+            <img src="assets/img_info/klein_morreti.jpg" alt="" class="user-avatar">
+            <div class="user-info">
+                <div class="detail-review">
+                  <h4>${childata.NameKH}</h4>
+                  <div class="stars-container">
+                      <div class="stars">${'★'.repeat(child.starCount)}</div>
+                  </div>
+                </div>
+                <p>${child.Detail}</p>
+            </div>
+        `;
+
+        listItem.innerHTML = reviewContent;
+        reviewsList.appendChild(listItem);
+    }
+    
+  }
+}
