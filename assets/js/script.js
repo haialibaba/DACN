@@ -517,6 +517,7 @@ function displayUserName() {
          <img src="./assets/img/shizuka.jpg" alt="">
          <span id="userLogin">${loggedInDoctorName}</span>
          <ul class="has__login-list">
+            <li class="has__login-item" id="admin"><a href="MedicalRecord.html" id="info-user">Hồ sơ bệnh án</a></li>
            <li class="has__login-item" id="admin"><a href="infoUser.html" id="info-user">Xem lịch hẹn</a></li>
            <li class="has__login-item"><a id="logout" onclick="logoutUser();">Đăng xuất</a></li>
          </ul>
