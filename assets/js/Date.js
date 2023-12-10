@@ -130,8 +130,9 @@ function displayDate(data, status) {
         })
     }
 }
-var IDAP = JSON.parse(localStorage.getItem('IDAP')).IDAP;
+
 document.getElementById("Datehandle").addEventListener("click", () =>{
+    var IDAP = JSON.parse(localStorage.getItem('IDAP')).IDAP;
     updateStatus(IDAP);
     document.getElementById("overlay").style.display = "none";
 });
