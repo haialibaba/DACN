@@ -111,33 +111,33 @@ function displayDate(data, status) {
             fetchKHFromFirebase((data) => {
                 fetchDTFromFirebase((data1) => {
                     fetchNFromFirebase((data2) => {
-                        if(childDt.Status){
+                        if (childDt.Status) {
                             const status = "Đã xử lý";
-                            displayInfoDate(childDt.IDTK, childDt.IDN, childDt.message, childDt.Date, status,data, data1, data2);
+                            displayInfoDate(childDt.IDTK, childDt.IDN, childDt.message, childDt.Date, status, data, data1, data2);
                         }
-                        else{
+                        else {
                             const status = "chưa xử lý";
-                            displayInfoDate(childDt.IDTK, childDt.IDN, childDt.message, childDt.Date, status,data, data1, data2);
+                            displayInfoDate(childDt.IDTK, childDt.IDN, childDt.message, childDt.Date, status, data, data1, data2);
                             const IDAP = {
-                                IDAP: childDt.IDAP      
+                                IDAP: childDt.IDAP
                             }
                             localStorage.setItem('IDAP', JSON.stringify(IDAP));
                         }
                     });
                 });
             });
-            
+
         })
     }
 }
 
-document.getElementById("Datehandle").addEventListener("click", () =>{
+document.getElementById("Datehandle").addEventListener("click", () => {
     var IDAP = JSON.parse(localStorage.getItem('IDAP')).IDAP;
     updateStatus(IDAP);
     document.getElementById("overlay").style.display = "none";
 });
 /////Hàm update trạng thái
-function updateStatus(idAppoint){
+function updateStatus(idAppoint) {
     const appoint = ref(connectDB, 'appointment/' + idAppoint);
     get(appoint)
         .then((snapshot) => {
@@ -147,10 +147,28 @@ function updateStatus(idAppoint){
             // Thực hiện cập nhật
             update(appoint, newData)
                 .then(() => {
-                    console.log("Cập nhật thành công");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cập nhật thành công!',
+                        text: 'Bạn đã cập nhật thành công.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 })
                 .catch((error) => {
-                    console.error("Lỗi cập nhật:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Cập nhật thất bại!',
+                        text: 'Bạn đã cập nhật thất bại: ' + error.message,
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
         })
         .catch((error) => {
@@ -158,7 +176,7 @@ function updateStatus(idAppoint){
         });
 }
 // Hàm để hiển thị dữ liệu lịch hẹn
-function displayInfoDate(IDTK, IDN, message, time, status,data, data1, data2) {
+function displayInfoDate(IDTK, IDN, message, time, status, data, data1, data2) {
     const accounts = Object.values(data).filter((account) => account.IDTK === IDTK);
     const infodoctors = Object.values(data1).filter((doctor) => doctor.IDBS === loggedInDoctorID);
     const departs = Object.values(data2).filter((depart) => depart.IDN === IDN);
@@ -192,7 +210,7 @@ function displayInfoDate(IDTK, IDN, message, time, status,data, data1, data2) {
 
     </div>`
                 DateDetail.innerHTML = data;
-                
+
             }
         }
 
